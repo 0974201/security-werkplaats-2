@@ -142,4 +142,4 @@ dmypy.json
 cython_debug/
 
 # visual studio code workspace
-mvc.workspace
+mvc.code-workspace
