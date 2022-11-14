@@ -3,4 +3,5 @@ Als redacteur wil ik op de vragenbank een menu hebben zodat ik kan kiezen wat vo
 Als redacteur wil ik de mogelijkheid hebben om een vraag te kunnen bekijken zodat ik deze kan verbeteren.
 Als redacteur wil ik de mogelijkheid hebben om waardes te selecteren zodat ik alleen de voor mij relevante resultaten krijg.
 Als redacteur wil ik de resultaten kunnen exporteren naar een CSV bestand zodat ik deze verder in Excel kan bekijken.
-Als beheerder wil ik scherm hebben waarin ik kan inzien wie een account heeft zodat ik deze kan bewerken of verwijderen. 
+Als beheerder wil ik scherm hebben waarin ik kan inzien wie een account heeft zodat ik deze kan bewerken of verwijderen.
+Als beheerder wil ik andere gebruikers kunnen aanmaken met een gebruikersnaam en wachtwoord, zodat ik meerdere gebruikers toegang kan geven.
