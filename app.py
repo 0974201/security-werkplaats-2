@@ -35,6 +35,11 @@ def index():
         "tables.html", table_list=tables, database_file=DATABASE_FILE
     )
 
+#login scherm
+@app.route("/login")
+def login():
+    return render_template("login.html", database_file=DATABASE_FILE)
+
 
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")
