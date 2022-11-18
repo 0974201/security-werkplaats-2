@@ -1,7 +1,8 @@
 import os.path
 import sys
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
+#from flask_login import login_required, current_user
 
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
@@ -44,9 +45,17 @@ def login():
 def base():
     return render_template("base.html")
 
-@app.route("/test") #test template
-def test():
-    return render_template("test.html")
+@app.route("/logintest") #test login template
+def logintest():
+    return render_template("logintest.html")
+
+@app.route("/logintest, methods=['POST']") #post method
+def logintest_post():
+    return redirect(url_for("app.login_success"))
+
+@app.route("/login_success") #should show up after successful post
+def login_success():
+    return render_template("login_success.html")
 
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")
@@ -58,6 +67,10 @@ def table_content(table_name=None):
         return render_template(
             "table_details.html", rows=rows, columns=column_names, table_name=table_name
         )
+
+@app.route("/test") #test
+def test():
+    return render_template("test.html"), 418       
 
 if __name__ == "__main__":
     app.run(host=FLASK_IP, port=FLASK_PORT, debug=FLASK_DEBUG)
