@@ -40,6 +40,13 @@ def index():
 def login():
     return render_template("login.html", database_file=DATABASE_FILE)
 
+@app.route("/base") #base template
+def base():
+    return render_template("base.html")
+
+@app.route("/test") #test template
+def test():
+    return render_template("test.html")
 
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")
