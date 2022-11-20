@@ -12,7 +12,7 @@ __________                      __________________
     | 1..*                     --------------------
 ____|________
 | leerdoelen |
-|------------| (een vraag kan meerdere leerdoelen hebbens)
+|------------| (een vraag kan meerdere leerdoelen hebben)
 | - ID       |
 | - leerdoel |
 --------------                              
