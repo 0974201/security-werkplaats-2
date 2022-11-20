@@ -16,7 +16,7 @@ FLASK_DEBUG = True
 
 app = Flask(__name__)
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
-DATABASE_FILE = os.path.join(app.root_path, 'databases', 'testcorrect_vragen.db')
+DATABASE_FILE = os.path.join(app.root_path, 'databases', 'testcorrect_kopie.db')
 
 # Check if the database file exists. If not, create a demo database
 if not os.path.isfile(DATABASE_FILE):
@@ -47,7 +47,7 @@ def base():
 
 @app.route("/logintest") #test login template
 def logintest():
-    return render_template("logintest.html")
+    return render_template("logintest.html", database_file=DATABASE_FILE)
 
 @app.route("/logintest", methods = ['POST']) #okay this works now, url just needs to be edited
 def logintest_post():
