@@ -8,7 +8,8 @@ app = Flask(__name__)
 def index():
     name = "Jeroen"
     things = "Roses are red, violets are blue"
-    return render_template("index.html", name=name, things=things)
+    fruits = ["apple", "banana", "orange", "pineapple"]
+    return render_template("index.html", name=name, things=things, fruits=fruits)
 
 
 @app.route("/user/<name>")
