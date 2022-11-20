@@ -6,9 +6,11 @@ app = Flask(__name__)
 # Define a route for the default URL, which loads the form
 @app.route("/")
 def index():
-    return render_template("index.html")
+    name = "Jeroen"
+    things = "Roses are red, violets are blue"
+    return render_template("index.html", name=name, things=things)
 
 
-@app.route("/user/<username>")
-def user(username):
-    return "Hello, {}!".format(username)
+@app.route("/user/<name>")
+def user(name):
+    return render_template("user.html", name=name)
