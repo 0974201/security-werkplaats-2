@@ -1,7 +1,7 @@
 import os.path
 import sys
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 #from flask_login import login_required, current_user
 
 from lib.tablemodel import DatabaseModel
@@ -49,9 +49,12 @@ def base():
 def logintest():
     return render_template("logintest.html")
 
-@app.route("/logintest, methods=['POST']") #post method
+@app.route("/logintest", methods = ['POST']) #post method
 def logintest_post():
-    return redirect(url_for("app.login_success"))
+    if request.method == 'POST':
+        return redirect(url_for("login_success"))
+    else:
+        return render_template("logintest.html")
 
 @app.route("/login_success") #should show up after successful post
 def login_success():
