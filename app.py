@@ -49,7 +49,7 @@ def base():
 def logintest():
     return render_template("logintest.html")
 
-@app.route("/logintest", methods = ['POST']) #post method
+@app.route("/logintest", methods = ['POST']) #okay this works now, url just needs to be edited
 def logintest_post():
     if request.method == 'POST':
         return redirect(url_for("login_success"))

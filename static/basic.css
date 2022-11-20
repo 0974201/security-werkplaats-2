@@ -123,3 +123,10 @@ section>section {
     main,footer {width: 98%}
     section,article {flex:none; width:100%; margin-left: 0;}
 }
+
+.test {
+    display: block;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+}
