@@ -71,7 +71,7 @@ def table_content(table_name=None):
             "table_details.html", rows=rows, columns=column_names, table_name=table_name
         )
 
-@app.route("/test") #test
+@app.route("/teapot") #test
 def test():
     return render_template("test.html"), 418       
 
