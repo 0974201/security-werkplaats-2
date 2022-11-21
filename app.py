@@ -55,10 +55,12 @@ def logintest():
 @app.route("/logintest", methods = ['POST']) #well we've atleast one admin user now, dus tijd om login shit te doen
 def logintest_post():
     if request.method == 'POST':
-        # gebruikersnaam = request.form.get('gebruikersnaam')
-        # wachtwoord = request.form.get('wachtwoord')
-        # check_password_hash(wachtwoord)
-        return redirect(url_for("login_success"))
+        gebruikersnaam = request.form.get('gebruikersnaam')
+        wachtwoord = request.form.get('wachtwoord')
+        derp = check_password_hash(user.check_user(gebruikersnaam, wachtwoord), wachtwoord)
+        print(derp)
+        if derp:
+            return redirect(url_for("login_success"))
     else:
         return render_template("logintest.html")
 
@@ -66,11 +68,12 @@ def logintest_post():
 def adduser():
     return render_template("adduser.html")
 
-@app.route("/adduser", methods = ['POST']) #fingers crossed this will work
+@app.route("/adduser", methods = ['POST']) #code to add values from form to db
 def adduser_post():
     if request.method == 'POST':
-        gebruikersnaam = request.form.get('gebruikersnaam')
-        wachtwoord = generate_password_hash(request.form.get('wachtwoord'), method = 'sha256') 
+        gebruikersnaam = request.form.get('gebruikersnaam') #gets username from form
+        # gets password from form and hashes it to store in db
+        wachtwoord = generate_password_hash(request.form.get('wachtwoord'), method = 'pbkdf2:sha256')
         admin = request.form.get('admin')
 
         user.add_new_user(gebruikersnaam, wachtwoord, admin)

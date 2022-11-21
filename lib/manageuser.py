@@ -18,11 +18,9 @@ class ManageUser:
             cursor = connection.cursor()
         
             #SQL statement to insert new user, didn't pass along the id bc it's on auto-increment anyways.
-            #hopefully things won't go to shit.
-            #update 2:40: IT WENT TO SHIT.
-            insert_new_user = "INSERT INTO login_test (id, gebruikersnaam, wachtwoord, is_admin) VALUES (?, ?, ?, ?)"
-            new_user = (1, user, password, admin)
-            print(f'(new_user)')
+            #okay fixed the auto-increment issue. only thing that's left now is the admin stuff
+            insert_new_user = "INSERT INTO login_test (gebruikersnaam, wachtwoord, is_admin) VALUES (?, ?, ?)"
+            new_user = (user, password, admin)
         
             cursor.execute(insert_new_user, new_user)
             connection.commit()
@@ -37,8 +35,26 @@ class ManageUser:
         return "e"
 
     def check_user(self, user, password):
-        return "a"
+        try:
+            connection = sqlite3.connect(self.database_file)
+            
+            cursor = connection.cursor()
+        
+            #SQL statement to check if user is present in db
+            check_user = "SELECT * FROM login_test WHERE gebruikersnaam = ? AND wachtwoord = ?"
+            login_user = (user, password)
+            print('test')
+
+            cursor.execute(check_user, login_user)
+            cursor.fetchone()
+            
+            connection.commit()
+            connection.close()
+
+        except OperationalError as e:
+            print(f"Error opening database file {self.database_file}")
+            raise e 
     
     def delete_user(self, user):
-        return "sports"
+        return "a sports"
         
