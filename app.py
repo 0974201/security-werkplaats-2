@@ -2,10 +2,12 @@ import os.path
 import sys
 
 from flask import Flask, render_template, redirect, url_for, request
+from werkzeug.security import generate_password_hash, check_password_hash
 #from flask_login import login_required, current_user
 
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
+from lib.manageuser import *
 
 # This demo glues a random database and the Flask framework. If the database file does not exist,
 # a simple demo dataset will be created.
@@ -23,6 +25,7 @@ if not os.path.isfile(DATABASE_FILE):
     print(f"Could not find database {DATABASE_FILE}, creating a demo database.")
     create_demo_database(DATABASE_FILE)
 dbm = DatabaseModel(DATABASE_FILE)
+user = ManageUser(DATABASE_FILE)
 
 # Main route that shows a list of tables in the database
 # Note the "@app.route" decorator. This might be a new concept for you.
@@ -47,7 +50,7 @@ def base():
 
 @app.route("/logintest") #test login template
 def logintest():
-    return render_template("logintest.html", database_file=DATABASE_FILE)
+    return render_template("logintest.html")
 
 @app.route("/logintest", methods = ['POST']) #okay this works now, url just needs to be edited
 def logintest_post():
@@ -55,6 +58,23 @@ def logintest_post():
         return redirect(url_for("login_success"))
     else:
         return render_template("logintest.html")
+
+@app.route("/adduser") #test add user template
+def adduser():
+    return render_template("adduser.html")
+
+@app.route("/adduser", methods = ['POST']) #fingers crossed this will work
+def adduser_post():
+    if request.method == 'POST':
+        gebruikersnaam = request.form.get('gebruikersnaam')
+        wachtwoord = generate_password_hash(request.form.get('wachtwoord'), method = 'sha256') 
+        admin = request.form.get('admin')
+
+        user.add_new_user(gebruikersnaam, wachtwoord, admin)
+
+        return redirect(url_for("login_success"))
+    else:
+        return render_template("adduser.html")
 
 @app.route("/login_success") #should show up after successful post
 def login_success():
