@@ -48,22 +48,6 @@ def login():
 def base():
     return render_template("base.html")
 
-@app.route("/logintest") #test login template
-def logintest():
-    return render_template("logintest.html")
-
-@app.route("/logintest", methods = ['POST']) #well we've atleast one admin user now, dus tijd om login shit te doen
-def logintest_post():
-    if request.method == 'POST':
-        gebruikersnaam = request.form.get('gebruikersnaam')
-        wachtwoord = request.form.get('wachtwoord')
-        derp = check_password_hash(user.check_user(gebruikersnaam, wachtwoord), wachtwoord)
-        print(derp)
-        if derp:
-            return redirect(url_for("login_success"))
-    else:
-        return render_template("logintest.html")
-
 @app.route("/adduser") #test add user template
 def adduser():
     return render_template("adduser.html")
@@ -85,6 +69,23 @@ def adduser_post():
 @app.route("/login_success") #should show up after successful post
 def login_success():
     return render_template("login_success.html")
+
+@app.route("/logintest") #test login template
+def logintest():
+    return render_template("logintest.html")
+
+@app.route("/logintest", methods = ['POST']) #well we've atleast one admin user now, dus tijd om login shit te doen
+def logintest_post():
+    if request.method == 'POST':
+        gebruikersnaam = request.form.get('gebruikersnaam')
+        wachtwoord = request.form.get('wachtwoord')
+        derp = user.check_user(gebruikersnaam, wachtwoord)
+        print(derp)
+        if check_password_hash(derp, wachtwoord):
+            return redirect(url_for("login_success"))
+    else:
+        return render_template("logintest.html")
+
 
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")

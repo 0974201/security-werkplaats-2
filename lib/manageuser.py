@@ -46,7 +46,7 @@ class ManageUser:
             print('test')
 
             cursor.execute(check_user, login_user)
-            cursor.fetchone()
+            user = cursor.fetchall()
             
             connection.commit()
             connection.close()
@@ -54,6 +54,7 @@ class ManageUser:
         except OperationalError as e:
             print(f"Error opening database file {self.database_file}")
             raise e 
+        return user
     
     def delete_user(self, user):
         return "a sports"
