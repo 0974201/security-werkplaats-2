@@ -1,7 +1,17 @@
 from flask import Flask, render_template
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 # Create a Flask instance
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "yep this is a secret key very special indeed hihihi"
+
+# Creat a form Class
+class NamerForm(FlaskForm):
+    name = StringField("What is your name?", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
 
 # Define a route for the default URL, which loads the form
 @app.route("/")
@@ -15,6 +25,17 @@ def index():
 @app.route("/user/<name>")
 def user(name):
     return render_template("user.html", name=name)
+
+
+@app.route("/name", methods=["GET", "POST"])
+def name():
+    name = None
+    form = NamerForm()
+    # Validate form input on submit
+    if form.validate_on_submit():
+        name = form.name.data
+        form.name.data = ""
+    return render_template("name.html", name=name, form=form)
 
 
 # Invalid URL

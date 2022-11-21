@@ -1,23 +1,29 @@
-<h1>Home</h1>
-<p>Home page</p>
-<p>Hello my name is {{ name }}.</p>
-<p>{{ things }}</p>
+{% extends 'base.html' %}
 
-<br><br>
-<p>{{ fruits[0] }}</p>
+{% block content %}
 
-<h3>My fruits:</h3>
-{% for fruit in fruits %}
-    
-    {% if fruit == "apple" %}
-        <p>{{ fruits[0] }} is the first fruit</p>
-    {% elif fruit == "banana" %}
-        <p>{{ fruits[1] }} is the second fruit</p>
-    {% elif fruit == "orange" %}
-        <p>{{ fruits[2] }} is the third fruit</p>
-    {% elif fruit == "pineapple" %}
-        <p>{{ fruits[3] }} is the third fruit</p>
-    {% else %}
-        <p>No (or more) fruits available</p>
-    {% endif %}
-{% endfor %}
+    <h1>Home</h1>
+    <p>Home page</p>
+    <p>Hello my name is {{ name }}.</p>
+    <p>{{ things }}</p>
+
+    <br><br>
+    <p>{{ fruits[0] }}</p>
+
+    <h3>My fruits:</h3>
+    {% for fruit in fruits %}
+        
+        {% if fruit == "apple" %}
+            <p>{{ fruits[0] }} is the first fruit</p>
+        {% elif fruit == "banana" %}
+            <p>{{ fruits[1] }} is the second fruit</p>
+        {% elif fruit == "orange" %}
+            <p>{{ fruits[2] }} is the third fruit</p>
+        {% elif fruit == "pineapple" %}
+            <p>{{ fruits[3] }} is the third fruit</p>
+        {% else %}
+            <p>No (or more) fruits available</p>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}
