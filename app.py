@@ -52,9 +52,12 @@ def base():
 def logintest():
     return render_template("logintest.html")
 
-@app.route("/logintest", methods = ['POST']) #okay this works now, url just needs to be edited
+@app.route("/logintest", methods = ['POST']) #well we've atleast one admin user now, dus tijd om login shit te doen
 def logintest_post():
     if request.method == 'POST':
+        # gebruikersnaam = request.form.get('gebruikersnaam')
+        # wachtwoord = request.form.get('wachtwoord')
+        # check_password_hash(wachtwoord)
         return redirect(url_for("login_success"))
     else:
         return render_template("logintest.html")
