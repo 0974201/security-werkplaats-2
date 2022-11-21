@@ -33,3 +33,12 @@ class ManageUser:
             print(f"Error opening database file {self.database_file}")
             raise e 
         
+    def edit_user(self, user, password, admin):
+        return "e"
+
+    def check_user(self, user, password):
+        return "a"
+    
+    def delete_user(self, user):
+        return "sports"
+        
