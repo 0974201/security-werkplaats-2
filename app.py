@@ -60,6 +60,11 @@ def adduser_post():
         wachtwoord = generate_password_hash(request.form.get('wachtwoord'), method = 'pbkdf2:sha256')
         admin = request.form.get('admin')
 
+        if admin == "on":
+            admin = 1
+        else:
+            admin = 0
+
         user.add_new_user(gebruikersnaam, wachtwoord, admin)
 
         return redirect(url_for("login_success"))

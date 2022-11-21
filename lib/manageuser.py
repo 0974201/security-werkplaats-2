@@ -18,13 +18,11 @@ class ManageUser:
             cursor = connection.cursor()
         
             #SQL statement to insert new user, didn't pass along the id bc it's on auto-increment anyways.
-            #okay fixed the auto-increment issue. only thing that's left now is the admin stuff
             insert_new_user = "INSERT INTO login_test (gebruikersnaam, wachtwoord, is_admin) VALUES (?, ?, ?)"
             new_user = (user, password, admin)
         
             cursor.execute(insert_new_user, new_user)
             connection.commit()
-            print('test')
             connection.close()
 
         except OperationalError as e:
