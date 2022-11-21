@@ -21,7 +21,7 @@ class ManageUser:
             #hopefully things won't go to shit.
             #update 2:40: IT WENT TO SHIT.
             insert_new_user = "INSERT INTO login_test (id, gebruikersnaam, wachtwoord, is_admin) VALUES (?, ?, ?, ?)"
-            new_user = (user, password, admin)
+            new_user = (1, user, password, admin)
             print(f'(new_user)')
         
             cursor.execute(insert_new_user, new_user)
