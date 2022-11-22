@@ -57,7 +57,7 @@ def adduser_post():
     if request.method == 'POST':
         gebruikersnaam = request.form.get('gebruikersnaam') #gets username from form
         # gets password from form and hashes it to store in db
-        wachtwoord = generate_password_hash(request.form.get('wachtwoord'), method = 'pbkdf2:sha256')
+        wachtwoord = generate_password_hash(request.form.get('wachtwoord'), method = 'pbkdf2:sha256', salt_length = 8)
         admin = request.form.get('admin')
 
         if admin == "on":
@@ -102,6 +102,21 @@ def table_content(table_name=None):
         return render_template(
             "table_details.html", rows=rows, columns=column_names, table_name=table_name
         )
+
+@app.route("/admin") #copypasta from above but points specifically to the login_test table
+def admin(table_name="login_test"):
+    if not table_name:
+        return "Missing table name", 400  # HTTP 400 = Bad Request
+    else:
+        rows, column_names = dbm.get_table_content(table_name)
+        return render_template(
+            "admin.html", rows=rows, columns=column_names, table_name=table_name
+        )
+
+@app.route("/login_details") #copypasta from above but points specifically to the login_test table
+def login_details():
+        return "login_details.html",
+
 
 @app.route("/teapot") #test
 def test():

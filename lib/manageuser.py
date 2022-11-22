@@ -14,15 +14,15 @@ class ManageUser:
     def add_new_user(self, user, password, admin): #copypasta van demodatabase.py
         try:
             connection = sqlite3.connect(self.database_file)
-            
             cursor = connection.cursor()
         
             #SQL statement to insert new user, didn't pass along the id bc it's on auto-increment anyways.
-            insert_new_user = "INSERT INTO login_test (gebruikersnaam, wachtwoord, is_admin) VALUES (?, ?, ?)"
+            new_user_qry = "INSERT INTO login_test (gebruikersnaam, wachtwoord, is_admin) VALUES (?, ?, ?)"
             new_user = (user, password, admin)
         
-            cursor.execute(insert_new_user, new_user)
+            cursor.execute(new_user_qry, new_user)
             connection.commit()
+
             connection.close()
 
         except OperationalError as e:
@@ -30,23 +30,37 @@ class ManageUser:
             raise e 
         
     def edit_user(self, user, password, admin):
-        return "e"
+        try:
+            connection = sqlite3.connect(self.database_file)
+            cursor = connection.cursor()
+        
+            #SQL statement to update an existing user
+            update_user_qry = "UPDATE login_test SET gebruikersnaam = ?, wachtwoord = ?, is_admin = ? WHERE gebruiksersnaam = ?"
+            edit_user = (user, password, admin)
+        
+            cursor.execute(update_user_qry, edit_user)
+            connection.commit()
+
+            connection.close()
+
+        except OperationalError as e:
+            print(f"Error opening database file {self.database_file}")
+            raise e
 
     def check_user(self, user, password):
         try:
             connection = sqlite3.connect(self.database_file)
-            
             cursor = connection.cursor()
         
             #SQL statement to check if user is present in db
-            check_user = "SELECT * FROM login_test WHERE gebruikersnaam = ? AND wachtwoord = ?"
+            check_user_qry = "SELECT * FROM login_test WHERE gebruikersnaam = ? AND wachtwoord = ?"
             login_user = (user, password)
             print('test')
 
-            cursor.execute(check_user, login_user)
-            user = cursor.fetchall()
-            
+            cursor.execute(check_user_qry, login_user)
+            user = cursor.fetchall() #is it a good idea to use fetchall here?
             connection.commit()
+
             connection.close()
 
         except OperationalError as e:
@@ -55,5 +69,20 @@ class ManageUser:
         return user
     
     def delete_user(self, user):
-        return "a sports"
+        try:
+            connection = sqlite3.connect(self.database_file)
+            cursor = connection.cursor()
+        
+            #SQL statement to delete an existing user
+            delete_user_qry = "DELETE FROM login_test WHERE gebruikersnaam = ?"
+            delete_user = (user)
+        
+            cursor.execute(delete_user_qry, delete_user)
+            connection.commit()
+
+            connection.close()
+
+        except OperationalError as e:
+            print(f"Error opening database file {self.database_file}")
+            raise e
         

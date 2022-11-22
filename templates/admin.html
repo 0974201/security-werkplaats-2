@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+{% block head %}
+    {{super()}}
+    <link rel="stylesheet" href="/static/basic.css" type="text/css">
+{% endblock %}
+{% block content %}
+    <h1>Admin panel</h1>
+    <p>Alle beschikbare gebruikers in <b>{{ table_name }}</b>:</p>
+    <table>
+        <thead>
+        <tr>
+            {% for column in columns %}
+            <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in rows %}
+        <tr {{ row.id }}>
+            {% for field in row %}
+            <td><a href="/login_details/{{ field }}">{{ field }}</a></td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

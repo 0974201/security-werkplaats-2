@@ -6,14 +6,14 @@
     <link rel="stylesheet" href="/static/basic.css" type="text/css">
 {% endblock %}
 {% block content %}
-    <h1>Login Here</h1>
+    <h1>Voeg nieuwe gebruiker toe</h1>
     <form method="POST" action="/adduser">
         <label for="gebruikersnaam">Gebruikersnaam:</label><br>
         <input type="text" name="gebruikersnaam" required><br/>
         <label for="wachtwoord">Wachtwoord:</label><br/>
         <input type="password" name="wachtwoord" required><br/>
-        <label for="wachtwoord">Is een admin?:</label><br/>
+        <label for="wachtwoord">Is een admin?</label><br/>
         <input type="checkbox" name="admin"><br/>
-        <input type="submit" value="Add User">
+        <input type="submit" value="Voeg gebruiker toe">
     </form>
 {% endblock %}
