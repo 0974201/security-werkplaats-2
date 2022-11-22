@@ -75,6 +75,23 @@ def adduser_post():
 def login_success():
     return render_template("login_success.html")
 
+@app.route("/logindemo_success") #should show up after successful post
+def logindemo_success():
+    return render_template("logindemo_success.html")
+
+@app.route("/demologin") #test login template
+def demologin():
+    return render_template("demologin.html")
+
+@app.route("/demologin", methods = ['POST']) #well we've atleast one admin user now, dus tijd om login shit te doen
+def demologin_post():
+    if request.method == 'POST':
+        gebruikersnaam = request.form.get('gebruikersnaam')
+        wachtwoord = request.form.get('wachtwoord')
+        return render_template("logindemo_success.html", gebruikersnaam = gebruikersnaam)
+    else:
+        return render_template("demologin.html")
+
 @app.route("/logintest") #test login template
 def logintest():
     return render_template("logintest.html")
