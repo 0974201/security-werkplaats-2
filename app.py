@@ -10,3 +10,8 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+@app.route("/user/<name>")
+def user(name):
+    return "<h1> Hello {}</h1>".format(name)
