@@ -1,11 +1,19 @@
-from flask import Flask, render_template
-
-# LISTEN_ALL = "0.0.0.0"
-#FLASK_IP = LISTEN_ALL
-#FLASK_PORT = 81
-#FLASK_DEBUG = True
+from flask import Flask, render_template, url_for
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
+app.config['sqalchemy_database_uri'] = 'sqlite:///tesy.db'
+db = SQLAlchemy(app)
+
+class todo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(200), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '(Tasks: %r)' % self.id
+
 
 @app.route('/')
 def index():
@@ -14,8 +22,12 @@ def index():
 @app.route('/login')
 def login():
     return render_template('login.html')
-    
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
+
+
 
 
     
