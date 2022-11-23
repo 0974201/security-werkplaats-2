@@ -67,17 +67,17 @@ def adduser_post():
 
         user.add_new_user(gebruikersnaam, wachtwoord, admin)
 
-        return redirect(url_for("login_success"))
+        return redirect(url_for("add_user_success.html"))
     else:
         return render_template("adduser.html")
+
+@app.route("/add_user_success") #should show up after successful post
+def add_user_success():
+    return render_template("add_user_success.html")
 
 @app.route("/login_success") #should show up after successful post
 def login_success():
     return render_template("login_success.html")
-
-@app.route("/logindemo_success") #should show up after successful post
-def logindemo_success():
-    return render_template("logindemo_success.html")
 
 @app.route("/demologin") #test login template
 def demologin():
@@ -88,16 +88,16 @@ def demologin_post():
     if request.method == 'POST':
         gebruikersnaam = request.form.get('gebruikersnaam')
         wachtwoord = request.form.get('wachtwoord')
-        return render_template("logindemo_success.html", gebruikersnaam = gebruikersnaam)
+        return render_template("login_success.html", gebruikersnaam = gebruikersnaam)
     else:
         return render_template("demologin.html")
 
-@app.route("/logintest") #test login template
-def logintest():
-    return render_template("logintest.html")
+@app.route("/login") #test login template
+def login():
+    return render_template("login.html")
 
-@app.route("/logintest", methods = ['POST']) #well we've atleast one admin user now, dus tijd om login shit te doen
-def logintest_post():
+@app.route("/login", methods = ['POST']) #well we've atleast one admin user now, dus tijd om login shit te doen
+def login_post():
     if request.method == 'POST':
         gebruikersnaam = request.form.get('gebruikersnaam')
         wachtwoord = request.form.get('wachtwoord')
@@ -106,7 +106,7 @@ def logintest_post():
         if check_password_hash(derp, wachtwoord):
             return redirect(url_for("login_success"))
     else:
-        return render_template("logintest.html")
+        return render_template("login.html")
 
 
 # The table route displays the content of a table
@@ -130,9 +130,9 @@ def admin(table_name="login_test"):
             "admin.html", rows=rows, columns=column_names, table_name=table_name
         )
 
-@app.route("/login_details") #copypasta from above but points specifically to the login_test table
-def login_details():
-        return "login_details.html",
+@app.route("/account_details") #copypasta from above but points specifically to the login_test table
+def account_details():
+        return "account_details.html",
 
 
 @app.route("/teapot") #test
