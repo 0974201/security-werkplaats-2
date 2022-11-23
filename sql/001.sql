@@ -1,0 +1,2 @@
+SELECT*FROM vragen
+LIMIT 5;
