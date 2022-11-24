@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['sqalchemy_database_uri'] = 'sqlite:///tesy.db'
+app.config['sqalchemy_database_uri'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
 class todo(db.Model):
