@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, Redirect
+from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -25,7 +25,7 @@ def index():
             db.session.add(new_task)
             db.session.commit()
             return redirect('/')
-        except:
+        except: 
             return 'There was an issue adding your task'
 
     else:
@@ -58,13 +58,11 @@ def update(id):
             return 'There was an issue updating your task'      
 
     else:
-        return render_template('update.html', task=task=)
+        return render_template('index.html', task=task)
         
     
 if __name__ == "__main__":
     app.run(debug=True)
-    
-    return render_template('index.html')
 
 @app.route('/login')
 def login():
