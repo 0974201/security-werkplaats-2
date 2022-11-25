@@ -96,7 +96,6 @@ def login_post():
     else:
         return 'u done goofed'
 
-
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")
 def table_content(table_name=None):
