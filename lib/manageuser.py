@@ -55,10 +55,11 @@ class ManageUser:
             #SQL statement to check if user is present in db
             check_user_qry = "SELECT * FROM login_test WHERE gebruikersnaam = ? AND wachtwoord = ?"
             login_user = (user, password)
-            print('test')
+            print(login_user)
 
             cursor.execute(check_user_qry, login_user)
-            user = cursor.fetchall() #is it a good idea to use fetchall here?
+            user = cursor.fetchone() #is it a good idea to use fetchall here?
+            print(user)
             connection.commit()
 
             connection.close()

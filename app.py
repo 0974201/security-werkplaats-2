@@ -1,9 +1,9 @@
 import os.path
 import sys
 
-from flask import Flask, render_template, redirect, url_for, request
-from werkzeug.security import generate_password_hash, check_password_hash
-#from flask_login import login_required, current_user
+from flask import Flask, render_template, redirect, url_for, request, flash
+#from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_required, current_user
 
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
@@ -17,6 +17,8 @@ FLASK_PORT = 81
 FLASK_DEBUG = True
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'nee'
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
 DATABASE_FILE = os.path.join(app.root_path, 'databases', 'testcorrect_kopie.db')
 
@@ -39,11 +41,6 @@ def index():
         "tables.html", table_list=tables, database_file=DATABASE_FILE
     )
 
-#login scherm
-@app.route("/login")
-def login():
-    return render_template("login.html", database_file=DATABASE_FILE)
-
 @app.route("/base") #base template
 def base():
     return render_template("base.html")
@@ -56,8 +53,9 @@ def adduser():
 def adduser_post():
     if request.method == 'POST':
         gebruikersnaam = request.form.get('gebruikersnaam') #gets username from form
+        wachtwoord = request.form.get('wachtwoord')
         # gets password from form and hashes it to store in db
-        wachtwoord = generate_password_hash(request.form.get('wachtwoord'), method = 'pbkdf2:sha256', salt_length = 8)
+        #wachtwoord = generate_password_hash(request.form.get('wachtwoord'), method = 'pbkdf2:sha256', salt_length = 8)
         admin = request.form.get('admin')
 
         if admin == "on":
@@ -76,22 +74,10 @@ def add_user_success():
     return render_template("add_user_success.html")
 
 @app.route("/login_success") #should show up after successful post
+#@login_required
 def login_success():
     return render_template("login_success.html")
-
-@app.route("/demologin") #test login template
-def demologin():
-    return render_template("demologin.html")
-
-@app.route("/demologin", methods = ['POST']) #well we've atleast one admin user now, dus tijd om login shit te doen
-def demologin_post():
-    if request.method == 'POST':
-        gebruikersnaam = request.form.get('gebruikersnaam')
-        wachtwoord = request.form.get('wachtwoord')
-        return render_template("login_success.html", gebruikersnaam = gebruikersnaam)
-    else:
-        return render_template("demologin.html")
-
+    
 @app.route("/login") #test login template
 def login():
     return render_template("login.html")
@@ -103,10 +89,12 @@ def login_post():
         wachtwoord = request.form.get('wachtwoord')
         derp = user.check_user(gebruikersnaam, wachtwoord)
         print(derp)
-        if check_password_hash(derp, wachtwoord):
+        if derp:
             return redirect(url_for("login_success"))
+        elif not derp:
+            flash('u done goofed')
     else:
-        return render_template("login.html")
+        return 'u done goofed'
 
 
 # The table route displays the content of a table
