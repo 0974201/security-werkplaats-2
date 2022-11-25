@@ -87,14 +87,14 @@ def login_post():
     if request.method == 'POST':
         gebruikersnaam = request.form.get('gebruikersnaam')
         wachtwoord = request.form.get('wachtwoord')
-        derp = user.check_user(gebruikersnaam, wachtwoord)
-        print(derp)
-        if derp:
+        check_user = user.check_user(gebruikersnaam, wachtwoord)
+        print(check_user)
+        if check_user:
             return redirect(url_for("login_success"))
-        elif not derp:
-            flash('u done goofed')
+        elif not check_user:
+            flash('warning',"u done goofed")
     else:
-        return 'u done goofed'
+        return render_template("login.html")
 
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")
