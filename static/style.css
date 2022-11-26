@@ -1,33 +1,32 @@
-*{
+* {
     margin: 0%;
     padding: 0%;
 
 }
 
-.main{
+.main {
     width: 100%;
     height: 100%;
     position: relative;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.5)50%rgba(0, 0, 0, 0.5)50%), url(istanbulold.jpg)
+    background: -webkit-linear-gradient(to right, #FFE47A, #3D7EAA);
+    background: linear-gradient(to right, #FFE47A, #3D7EAA);
     background-position: center;
     background-size: cover;
     height: 109vh;
 }
 
-.navbar{
-    width: 1200px;
-    height: 75px;
-    margin: auto;
+.navbar {}
 
+.icon {}
+
+.header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px 0;
 }
 
-.icon{
-    width: 200px;
-    float: left;
-    height: 70px;
-}
-
-.logo{
+.logo {
 
     color: aquamarine;
     font-size: 25px;
@@ -35,55 +34,41 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding-left: 20px;
     float: left;
-    padding-top: 10px;
 }
 
-.menu{
-    width: 400px;
-    float: left;
-    height: 70px;
+.menu {}
 
-}
-
-ul{
-    float: left;
+ul {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-ul li{
+ul li {
 
     list-style: none;
     margin-left: 62px;
-    margin-top: 27px;
     font-size: 14px;
 
 }
 
-ul li a{
+ul li a {
     text-decoration: none;
     color: aquamarine;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
     transition: 0.4s ease-in-out;
-    
+
 }
 
-ul li a:hover{
-    color: azure;
+ul li a:hover {
+    color: rebeccapurple;
 }
 
-.search{
+.search {}
 
-    width: 330px;
-    float: left;
-    margin-left: 270px;
-    
-}
-
-.srch{
-    font-family: 'Times New Roman',
+.srch {
+    font-family: 'Times New Roman';
     width: 200px;
     height: 40px;
     background: transparent;
@@ -92,35 +77,37 @@ ul li a:hover{
     color: #fff;
     border-right: none;
     font-size: 16px;
-    float: :left
+    float: left;
     padding: 10px;
     border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px:
+    border-top-left-radius: 5px;
 
 }
 
-.btn{
+.btn {
     width: 100px;
     height: 40px;
     background: #ff7200;
     border: 2px solid;
-    margin-top: 13px;
     color: #fff;
     font-size: 15px;
     border-bottom-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
-.btn:focus{
+.btn:hover {
+    outline: none;
+    cursor: pointer;
+    background: rebeccapurple;
+    transition: 0.3s;
+}
+
+.srch:focus {
+
     outline: none;
 }
 
-.srch:focus{
-
-    outline: none;
-}
-
-.content{
+.content {
 
     width: 1200px;
     height: auto;
@@ -129,7 +116,7 @@ ul li a:hover{
     position: relative;
 }
 
-.content .par{
+.content .par {
     padding-left: 20px;
     padding-bottom: 25px;
     font-family: Arial;
@@ -138,7 +125,7 @@ ul li a:hover{
 
 }
 
-.content h1{
+.content h1 {
 
     font-family: 'Segoe UI';
     font-size: 50px;
@@ -148,11 +135,9 @@ ul li a:hover{
 
 }
 
-.content .cn{
+.content .cn {
     width: 160px;
     height: 40px;
     background: #ff7200;
     border: none
-
-
 }
