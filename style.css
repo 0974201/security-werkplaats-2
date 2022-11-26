@@ -104,11 +104,55 @@ ul li a:hover{
     height: 40px;
     background: #ff7200;
     border: 2px solid;
+    margin-top: 13px;
+    color: #fff;
+    font-size: 15px;
+    border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
 
+.btn:focus{
+    outline: none;
+}
 
+.srch:focus{
 
+    outline: none;
+}
 
+.content{
 
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    color: royalblue;
+    position: relative;
+}
+
+.content .par{
+    padding-left: 20px;
+    padding-bottom: 25px;
+    font-family: Arial;
+    letter-spacing: 1.2px;
+    line-height: 50px;
+
+}
+
+.content h1{
+
+    font-family: 'Segoe UI';
+    font-size: 50px;
+    padding-left: 20px;
+    margin-top: 9%;
+    letter-spacing: 2px;
+
+}
+
+.content .cn{
+    width: 160px;
+    height: 40px;
+    background: #ff7200;
+    border: none
 
 
 }
