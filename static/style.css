@@ -139,5 +139,43 @@ ul li a:hover {
     width: 160px;
     height: 40px;
     background: #ffffff;
-    border: none
+    border: none;
+    margin-bottom: 10px;
+    margin-left: 200px;
+    font-family: 'Segoe UI';
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 4s ease;
+    
+}
+
+.content .cn a{
+    text-decoration-line: none;
+    color: #1a368a;
+    transition: .1s ease;
+
+}
+
+.cn:hover{
+    background-color: #1a368a;
+
+}
+
+.content span{
+    color: #1a368a;
+    font-size: 60px;
+
+}
+
+.form{
+    width: 250px;
+    height: 380px;
+    background: linear-gradient(to top,) rgb(\, rgb(21, 43, 21), blue);
+    position: absolute;
+    top: -20px;
+    left: 870px;
+
+
+
 }
