@@ -58,7 +58,7 @@ class ManageUser:
             print(login_user)
 
             cursor.execute(check_user_qry, login_user)
-            user = cursor.fetchone() #is it a good idea to use fetchall here?
+            user = cursor.fetchone() #fetchall geeft alle matchende rows terug, fetchone alleen één row of none als t er niet is. 
             print(user)
             connection.commit()
 

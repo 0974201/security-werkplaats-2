@@ -91,10 +91,11 @@ def login_post():
         print(check_user)
         if check_user:
             return redirect(url_for("login_success"))
-        elif not check_user:
+        elif check_user == None:
             flash('warning',"u done goofed")
+            return render_template("login.html")
     else:
-        return render_template("login.html")
+        return render_template("login.html") #okay, so why are we getting a TypeError here, wat gaat er mis?
 
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")
