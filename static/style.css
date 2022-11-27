@@ -18,3 +18,8 @@ h1 {
     padding-top: 10px;
     padding-bottom: 5pzx
 }
+
+.flashes {
+    background-color: #e5ff00;
+    border-left: 6px solid #f4e136;
+}

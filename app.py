@@ -82,19 +82,19 @@ def login_success():
 def login():
     return render_template("login.html")
 
-@app.route("/login", methods = ['POST']) #well we've atleast one admin user now, dus tijd om login shit te doen
+@app.route("/login", methods = ['POST']) # login post, it works for now i guess??
 def login_post():
     if request.method == 'POST':
         gebruikersnaam = request.form.get('gebruikersnaam')
         wachtwoord = request.form.get('wachtwoord')
-        check_user = user.check_user(gebruikersnaam, wachtwoord)
+        check_user = user.check_user(gebruikersnaam, wachtwoord) #checks if user is in db, returns none if not present
         if check_user:
             return redirect(url_for("login_success"))
         elif check_user == None:
             flash("u done goofed")
             return render_template("login.html")
     else:
-        return render_template("login.html") #okay, so why are we getting a TypeError here, wat gaat er mis?
+        return render_template("login.html")
 
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")

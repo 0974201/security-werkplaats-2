@@ -7,17 +7,18 @@
 {% endblock %}
 {% block content %}
     <h1>Login Here</h1>
-    <form method="POST" action="/login">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class=flashes>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flashes">
                 {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <p><strong>{{ message }}</strong></p>
                 {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
-        
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/login">
         <label for="gebruikersnaam">Gebruikersnaam:</label><br>
         <input type="text" name="gebruikersnaam" required><br/>
         <label for="wachtwoord">Wachtwoord:</label><br/>
