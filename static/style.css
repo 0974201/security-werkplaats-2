@@ -19,7 +19,8 @@ h1 {
     padding-bottom: 5pzx
 }
 
-.flashes {
+.flash-warning {
     background-color: #e5ff00;
+    color: rgb(30, 238, 169);
     border-left: 6px solid #f4e136;
 }

@@ -91,7 +91,7 @@ def login_post():
         if check_user:
             return redirect(url_for("login_success"))
         elif check_user == None:
-            flash("u done goofed")
+            flash("u done goofed", 'warning')
             return render_template("login.html")
     else:
         return render_template("login.html")

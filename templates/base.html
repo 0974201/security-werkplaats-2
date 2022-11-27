@@ -10,6 +10,15 @@
     {% endblock %}
 </head>
 <body>
+    {% for category, messages in get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="flash-{{category}}">
+                {% for message in messages %}
+                    <p><strong>{{ message }}</strong></p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endfor %}
     <div id="content">{% block content %}<p>insert text</p>{% endblock %}</div>
     <div id="footer">{% block footer %}{% endblock %}</div>
     <!-- block (naam) geeft aan wat er in de child template veranderd kan worden. -->
