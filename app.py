@@ -88,11 +88,10 @@ def login_post():
         gebruikersnaam = request.form.get('gebruikersnaam')
         wachtwoord = request.form.get('wachtwoord')
         check_user = user.check_user(gebruikersnaam, wachtwoord)
-        print(check_user)
         if check_user:
             return redirect(url_for("login_success"))
         elif check_user == None:
-            flash('warning',"u done goofed")
+            flash("u done goofed")
             return render_template("login.html")
     else:
         return render_template("login.html") #okay, so why are we getting a TypeError here, wat gaat er mis?
