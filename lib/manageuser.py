@@ -77,7 +77,6 @@ class ManageUser:
             #SQL statement to delete an existing user
             delete_user_qry = "DELETE FROM login_test WHERE gebruikersnaam = ?"
             delete_user = (user)
-            #need to subtract 1 from the sql_lite sequence table bc it keeps track of the amount of rows in login_test there
             
             cursor.execute(delete_user_qry, delete_user)
             connection.commit()

@@ -65,13 +65,11 @@ def adduser_post():
 
         user.add_new_user(gebruikersnaam, wachtwoord, admin)
 
-        return redirect(url_for("add_user_success.html"))
-    else:
+        flash("user created", 'info') #shows after successfull user creattoion
         return render_template("adduser.html")
-
-@app.route("/add_user_success") #should show up after successful post
-def add_user_success():
-    return render_template("add_user_success.html")
+    else:
+        flash("u done goofed", 'warning')
+        return render_template("adduser.html")
 
 @app.route("/login_success") #should show up after successful post
 #@login_required
