@@ -26,6 +26,11 @@ def index():
 def user(name):
     return render_template("user.html", user_name=name)
 
-
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+#create custom error pages
+@app.errorhandler(404):
+def page_not_found(e):
+return render_template("404.html"),404
