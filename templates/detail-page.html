@@ -1,45 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Detail page</title>
-
-
 </head>
 
 <body>
-  <table class="content-table">
-    <thead>
-      <tr>
-        <th>id</th>
-
-        <th>leerdoel</th>
-        <th>vragen</th>
-        <link rel="stylesheet" href="/static/basic.css">
-    </thead>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>5</td>
-      <td>Which property of an object is<br> identified using the sense of smell? (A) color (B) odor (C)
-        temperature (D)
-        weight</td>
-      <td>Which type of energy is needed to cut a piece of wood into smaller pieces with a saw? (A) light (B) heat (C)
-        sound (D) mechanical</td>
-      <td>Which type of energy is needed to cut a piece of wood into smaller pieces with a saw? (A) light (B) heat (C)
-        sound (D) mechanical</td>
-      <td>Which material is the best conductor of electricity? (A) metal (B) glass (C) wood (D) plastic</td>
-      <td>What force causes objects to be pulled toward Earth? (A) friction (B) gravity (C) light (D) electricity</td>
-    </tr>
-  </table>
+  <table> {% vragen.db%}</table>
+  <main>
+    {% for item in all_data %}
+    <p>Vragen tabel<i>{{database_file}}</i>:</p>
+    <ul>
+      {% for item in all_data %}
+    </ul>
+    {% endfor %}
+  </main>
 </body>
-
-
 
 </html>
