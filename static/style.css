@@ -175,7 +175,20 @@ ul li a:hover {
     position: absolute;
     top: -20px;
     left: 870px;
+    border-radius: 10px;
+    padding: 25px;
 
+}
 
+.form h2{
+    width: 220px;
+    font-family: 'Segoe UI';
+    text-align: center;
+    color: #1a368a;
+    font-size: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 2px
 
 }
