@@ -117,7 +117,7 @@ def admin(table_name="login_test"):
 
 @app.route("/account_details") #copypasta from above but points specifically to the login_test table
 def account_details():
-        return "account_details.html",
+        return render_template("account_details.html")
 
 
 @app.route("/teapot") #test
