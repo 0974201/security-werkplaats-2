@@ -11,6 +11,17 @@
 <body>
 <main>
     <h1>Database onderzoek</h1>
+    <form action="/action_page.php">
+        <label for="action">Choose a action:</label>
+        <select name="cars" id="cars">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="opel">Opel</option>
+          <option value="audi">Audi</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+      </form>
     <p>Alle rijen in de tabel <b>{{ table_name }}</b>:</p>
     <table>
         <thead>
