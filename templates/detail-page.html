@@ -3,6 +3,7 @@
 
 <head>
   <title>Detail page</title>
+
 </head>
 
 <body>
@@ -11,7 +12,8 @@
     {% for item in all_data %}
     <p>Vragen tabel<i>{{database_file}}</i>:</p>
     <ul>
-      {% for item in all_data %}
+      {% for vragen in table %}
+      <li><a href=filtering/{{table}}></a> </li>
     </ul>
     {% endfor %}
   </main>
