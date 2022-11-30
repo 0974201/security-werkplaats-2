@@ -1,6 +1,7 @@
 * {
     margin: 0%;
     padding: 0%;
+    font-family: sans-serif;
 
 }
 
@@ -14,6 +15,7 @@
     background-size: cover;
     height: 109vh;
 }
+
 
 .navbar {}
 
@@ -191,4 +193,58 @@ ul li a:hover {
     padding: 8px;
     margin: 2px
 
+}
+
+.form input{
+    width: 240px;
+    height: 35px;
+    background: transparent;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-top: 30px;
+    font-family: 'Segoe UI';
+
+}
+
+.form input:focus{
+    outline: none;
+
+}
+
+::placeholder{
+    color: #fff;
+    font-family: 'Segoe UI';
+}
+
+.btnn{
+    width: 240px;
+    height: 40px;
+    background: #1a368a;
+    border: none;
+    margin-top: 30px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #1a368a;
+    transition: 0.4s ease;
+
+}
+
+.btnn:hover{
+    background: #fff;
+    color: #1a368a;
+}
+
+.btnn a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.form.link{
+    font-family: sans-serif;
 }
