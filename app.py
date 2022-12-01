@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, request
 import sqlite3
 import os.path
 
@@ -8,7 +8,12 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     data = get_db()
-    return str(data)
+    return render_template("detail-page.html", all_data=data)
+
+
+@app.route("/add_items", methods=["post"])
+def add_items():
+    return request.form["select_items "]
 
 
 def get_db():
@@ -16,9 +21,9 @@ def get_db():
     if db is None:
         db = g._database = sqlite3.connect("databases/testcorrect_vragen.db")
         cursor = db.cursor()
-        cursor.execute("select*from vragen")
-
-    return cursor.fetchall()
+        cursor.execute("SELECT vraag FROM vragen")
+        all_data = cursor.fetchall()
+    return all_data
 
 
 if __name__ == "__main__":

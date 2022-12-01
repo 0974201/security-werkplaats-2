@@ -2,20 +2,20 @@
 <html>
 
 <head>
-  <title>Detail page</title>
-
+  <title>detail page</title>
 </head>
 
 <body>
-  <table> {% vragen.db%}</table>
   <main>
-    {% for item in all_data %}
-    <p>Vragen tabel<i>{{database_file}}</i>:</p>
-    <ul>
-      {% for vragen in table %}
-      <li><a href=filtering/{{table}}></a> </li>
-    </ul>
-    {% endfor %}
+    <div id="add_item">
+      <form action="/add_items" method="POST">
+        <select name="select_items">
+          {% for item in all_data %}
+          <option value="{{ item}}">{{ item}}</option>
+          {% endfor %}
+          <input type="submit" value="BEWERK VRAAG">
+      </form>
+    </div>
   </main>
 </body>
 
