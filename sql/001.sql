@@ -1,2 +1,2 @@
 SELECT*FROM vragen
-LIMIT 5;
+WHERE leerdoel IS NULL

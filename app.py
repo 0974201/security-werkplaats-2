@@ -21,7 +21,7 @@ def get_db():
     if db is None:
         db = g._database = sqlite3.connect("databases/testcorrect_vragen.db")
         cursor = db.cursor()
-        cursor.execute("SELECT vraag FROM vragen")
+        cursor.execute("SELECT*FROM vragen WHERE leerdoel IS NULL")
         all_data = cursor.fetchall()
     return all_data
 
