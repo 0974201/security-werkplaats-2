@@ -7,14 +7,15 @@
 
 <body>
   <main>
-    <div id="add_item">
-      <form action="/add_items" method="POST">
+
+    <div id="Filter vragen">
+      <form action="/Filter_vragen" method="POST">
         <select name="select_items">
           {% for item in all_data %}
           <option value="{{ item}}">{{ item}}</option>
           {% endfor %}
-          <input type="submit" value="BEWERK">
-          <button type="button">
+          <input type="submit" value="Filter_vragen">
+          <button href="\templates\filter_null" type="button">
             Filter NULL
           </button>
       </form>
