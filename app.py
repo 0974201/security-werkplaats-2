@@ -115,12 +115,10 @@ def admin(table_name="login_test"):
             "admin.html", rows=rows, columns=column_names, table_name=table_name
         )
 
-@app.route("/account_details/<id>") #copypasta from above but points specifically to the login_test table
+@app.route("/account_details/<id>") #gets id to load user from db
 def account_details(id):
-        rows = user.get_user(id)
-        #print(rows)
-
-        user_list = rows
+        user_info = user.get_user(id)
+        user_list = user_info #puts row from db into a list
         #print(user_list)
 
         id = user_list[0]
