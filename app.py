@@ -1,7 +1,7 @@
 import os.path
 import sys
 
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, send_from_directory
 #from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_required, current_user
 
@@ -40,6 +40,11 @@ def index():
     return render_template(
         "tables.html", table_list=tables, database_file=DATABASE_FILE
     )
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico')
 
 @app.route("/base") #base template
 def base():
