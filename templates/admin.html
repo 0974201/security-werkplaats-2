@@ -7,21 +7,20 @@
 {% endblock %}
 {% block content %}
     <h1>Admin panel</h1>
-    <p>Alle beschikbare gebruikers in <b>{{ table_name }}</b>:</p>
     <table>
         <thead>
         <tr>
             {% for column in columns %}
-            <th>{{ column }}</th>
+            <th>{{ column[0] }}</th>
+            <th>{{ column[1] }}</th>
             {% endfor %}
         </tr>
         </thead>
         <tbody>
         {% for row in rows %}
-        <tr {{ row.id }}>
-            {% for field in row %}
-            <td><a href="/account_details/{{ field }}">{{ field }}</a></td>
-            {% endfor %}
+        <tr>
+            <td><a href="/account_details/{{ row[0] }}">{{ row[0] }}</a></td>
+            <td>{{ row[1] }}</td>
         </tr>
         {% endfor %}
         </tbody>

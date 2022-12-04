@@ -115,9 +115,22 @@ def admin(table_name="login_test"):
             "admin.html", rows=rows, columns=column_names, table_name=table_name
         )
 
-@app.route("/account_details") #copypasta from above but points specifically to the login_test table
-def account_details():
-        return render_template("account_details.html")
+@app.route("/account_details/<id>") #copypasta from above but points specifically to the login_test table
+def account_details(id):
+        rows = user.get_user(id)
+        #print(rows)
+
+        user_list = rows
+        #print(user_list)
+
+        id = user_list[0]
+        gebruikersnaam = user_list[1]
+        wachtwoord = user_list[2]
+        admin = user_list[3]
+
+        #print(f"{id}, {gebruikersnaam}, {wachtwoord}, {admin}")
+
+        return render_template("account_details.html", gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
 
 
 @app.route("/teapot") #test

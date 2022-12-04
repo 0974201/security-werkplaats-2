@@ -6,5 +6,16 @@
     <link rel="stylesheet" href="/static/basic.css" type="text/css">
 {% endblock %}
 {% block content %}
-    <p>do stuff</p>
+    <h1>Gegevens van {{gebruikersnaam}}</h1>
+
+    <form method="POST" action="/edituser">
+        <label for="gebruikersnaam">Gebruikersnaam:</label><br>
+        <input type="text" name="gebruikersnaam" value="{{gebruikersnaam}}" readonly><br/>
+        <label for="wachtwoord">Wachtwoord:</label><br/>
+        <input type="password" name="wachtwoord" value="{{wachtwoord}}" readonly><br/>
+        <label for="wachtwoord">Admin</label><br/>
+        <input type="checkbox" name="admin" disabled="disabled" {{ "checked" if admin == 1 }}><br/>
+        <input type="submit" value="Bewerk gebruiker">
+        <input type="submit" value="Verwijder gebruiker">
+    </form>
 {% endblock %}

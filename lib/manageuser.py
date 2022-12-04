@@ -35,7 +35,7 @@ class ManageUser:
             cursor = connection.cursor()
         
             #SQL statement to update an existing user
-            update_user_qry = "UPDATE login_test SET gebruikersnaam = ?, wachtwoord = ?, is_admin = ? WHERE gebruiksersnaam = ?"
+            update_user_qry = "UPDATE login_test SET gebruikersnaam = ?, wachtwoord = ?, is_admin = ? WHERE user_id = ?"
             edit_user = (user, password, admin)
         
             cursor.execute(update_user_qry, edit_user)
@@ -47,7 +47,7 @@ class ManageUser:
             print(f"Error opening database file {self.database_file}")
             raise e
 
-    def check_user(self, user, password):
+    def login_user(self, user, password):
         try:
             connection = sqlite3.connect(self.database_file)
             cursor = connection.cursor()
@@ -68,6 +68,27 @@ class ManageUser:
             print(f"Error opening database file {self.database_file}")
             raise e 
         return user
+
+    def get_user(self, id):
+        try:
+            connection = sqlite3.connect(self.database_file)
+            cursor = connection.cursor()
+        
+            #SQL statement to get user from table
+            get_user_qry = "SELECT * FROM login_test WHERE user_id = ?"
+            user_id = (id)
+            print(user_id)
+
+            cursor.execute(get_user_qry, user_id)
+            user = cursor.fetchone() 
+            connection.commit()
+
+            connection.close()
+
+        except OperationalError as e:
+            print(f"Error opening database file {self.database_file}")
+            raise e 
+        return user    
     
     def delete_user(self, user):
         try:
@@ -75,7 +96,7 @@ class ManageUser:
             cursor = connection.cursor()
         
             #SQL statement to delete an existing user
-            delete_user_qry = "DELETE FROM login_test WHERE gebruikersnaam = ?"
+            delete_user_qry = "DELETE FROM login_test WHERE user_id = ?"
             delete_user = (user)
             
             cursor.execute(delete_user_qry, delete_user)
