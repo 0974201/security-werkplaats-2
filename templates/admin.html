@@ -25,4 +25,8 @@
         {% endfor %}
         </tbody>
     </table>
+    <form>
+        <button formaction="{{ url_for( 'adduser') }}">Voeg gebruiker toe</button>
+    </form>
+    
 {% endblock %}
