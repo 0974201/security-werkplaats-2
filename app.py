@@ -135,6 +135,13 @@ def account_details(id):
 
         return render_template("account_details.html", gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
 
+@app.route("/account_details/delete/<id>") #gets id to load user from db
+def delete_account(id):
+        user.delete_user(id)
+
+        flash("yeet", 'warning')
+        return render_template("admin.html")        
+
 
 @app.route("/teapot") #test
 def test():

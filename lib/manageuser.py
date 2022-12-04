@@ -99,7 +99,13 @@ class ManageUser:
             delete_user_qry = "DELETE FROM login_test WHERE user_id = ?"
             delete_user = (user)
             
+            #need to reset sqlite_sequence table bc user_id = autoincrement
+            reset_seq_qry = "UPDATE 'sqlite_sequence' SET 'seq' = (SELECT MAX('user_id') FROM 'login_test') WHERE 'name' = 'login_test'"
+            
             cursor.execute(delete_user_qry, delete_user)
+            connection.commit()
+
+            cursor.execute(reset_seq_qry)
             connection.commit()
 
             connection.close()
