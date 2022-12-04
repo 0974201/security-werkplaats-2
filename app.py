@@ -90,7 +90,7 @@ def login_post():
     if request.method == 'POST':
         gebruikersnaam = request.form.get('gebruikersnaam')
         wachtwoord = request.form.get('wachtwoord')
-        check_user = user.check_user(gebruikersnaam, wachtwoord) #checks if user is in db, returns none if not present
+        check_user = user.login_user(gebruikersnaam, wachtwoord) #checks if user is in db, returns none if not present
         if check_user:
             return redirect(url_for("login_success"))
         elif check_user == None:
@@ -115,7 +115,7 @@ def admin(table_name="login_test"):
     if not table_name:
         return "Missing table name", 400  # HTTP 400 = Bad Request
     else:
-        rows, column_names = dbm.get_table_content(table_name)
+        rows, column_names = dbm.get_admin_table_content(table_name)
         return render_template(
             "admin.html", rows=rows, columns=column_names, table_name=table_name
         )

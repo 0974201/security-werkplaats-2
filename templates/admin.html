@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Admin panel{% endblock %}
 {% block head %}
     {{super()}}
     <link rel="stylesheet" href="/static/basic.css" type="text/css">
@@ -11,16 +11,18 @@
         <thead>
         <tr>
             {% for column in columns %}
-            <th>{{ column[0] }}</th>
-            <th>{{ column[1] }}</th>
+            <th>{{ column}}</th>
             {% endfor %}
         </tr>
         </thead>
         <tbody>
         {% for row in rows %}
         <tr>
-            <td><a href="/account_details/{{ row[0] }}">{{ row[0] }}</a></td>
-            <td>{{ row[1] }}</td>
+            {% for field in row %}
+                <td>{{ field }}</td>
+            {% endfor %}
+            <td><a href="/account_details/{{ row[0] }}"> Bewerk </a></td>
+            <td><a href="/account_details/delete/{{ row[0] }}"> Verwijder </a></td>
         </tr>
         {% endfor %}
         </tbody>

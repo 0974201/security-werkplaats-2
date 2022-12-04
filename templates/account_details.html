@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Gebruiker gegevens{% endblock %}
 {% block head %}
     {{super()}}
     <link rel="stylesheet" href="/static/basic.css" type="text/css">
@@ -16,6 +16,5 @@
         <label for="wachtwoord">Admin</label><br/>
         <input type="checkbox" name="admin" disabled="disabled" {{ "checked" if admin == 1 }}><br/>
         <input type="submit" value="Bewerk gebruiker">
-        <input type="submit" value="Verwijder gebruiker">
     </form>
 {% endblock %}
