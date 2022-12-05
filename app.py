@@ -15,7 +15,7 @@ FLASK_DEBUG = True
 
 app = Flask(__name__)
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
-DATABASE_FILE = os.path.join(app.root_path, 'databases', 'testcorrect_vragen.db')
+DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db")
 
 # Check if the database file exists. If not, create a demo database
 if not os.path.isfile(DATABASE_FILE):
@@ -43,9 +43,32 @@ def table_content(table_name=None):
         return "Missing table name", 400  # HTTP 400 = Bad Request
     else:
         rows, column_names = dbm.get_table_content(table_name)
+        check = dbm.check_invalid(table_name, "leerdoel", "id", "leerdoelen")
         return render_template(
-            "table_details.html", rows=rows, columns=column_names, table_name=table_name
+            "table_details.html",
+            rows=rows,
+            columns=column_names,
+            table_name=table_name,
+            check=check,
         )
+
+
+# Invalid leerdoel route
+@app.route("/invalid_leerdoel/<table_name>")
+def invalid_leerdoel(table_name=None):
+    if not table_name:
+        return "Missing table name", 400
+    else:
+        rows, column_names = dbm.check_invalid(
+            table_name, "leerdoel", "id", "leerdoelen"
+        )
+        return render_template(
+            "invalid_leerdoel.html",
+            table_name=table_name,
+            rows=rows,
+            columns=column_names,
+        )
+
 
 if __name__ == "__main__":
     app.run(host=FLASK_IP, port=FLASK_PORT, debug=FLASK_DEBUG)

@@ -28,3 +28,11 @@ class DatabaseModel:
 
         # Note that this method returns 2 variables!
         return table_content, table_headers
+
+    def check_invalid(self, table_name, column_name, column_name2, table_name2):
+        cursor = sqlite3.connect(self.database_file).cursor()
+        cursor.execute(
+            f"SELECT * FROM {table_name} WHERE {column_name} NOT IN ( SELECT {column_name2} FROM {table_name2})"
+        )
+        table_content = cursor.fetchall()
+        return table_content
