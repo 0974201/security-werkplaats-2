@@ -28,3 +28,5 @@ class DatabaseModel:
 
         # Note that this method returns 2 variables!
         return table_content, table_headers
+    
+    def 
