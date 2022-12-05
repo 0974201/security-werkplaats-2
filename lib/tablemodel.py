@@ -35,4 +35,5 @@ class DatabaseModel:
             f"SELECT * FROM {table_name} WHERE {column_name} NOT IN ( SELECT {column_name2} FROM {table_name2})"
         )
         table_content = cursor.fetchall()
-        return table_content
+        table_headers = [column_name[0] for column_name in cursor.description]
+        return table_content, table_headers

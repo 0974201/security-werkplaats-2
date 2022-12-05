@@ -14,17 +14,18 @@
     <p>Here is the database:</p>
     <table>
         <tr>
-            <th>id</th>
-            <th>auteur</th>
-            <th>vragen</th>
-            <th>leerdoel</th>
+            {% for column in columns %}
+            <th>{{ column }}</th>
+            {% endfor %}
         </tr>
         {% for row in rows %}
         <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
+            {% for field in row %}
+            <td>{{ field }}</td>
+            {% endfor %}
         </tr>
         {% endfor %}
     </table>
+</main>
+</body>
+</html>

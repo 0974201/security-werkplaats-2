@@ -64,9 +64,9 @@ def invalid_leerdoel(table_name=None):
         )
         return render_template(
             "invalid_leerdoel.html",
-            table_name=table_name,
             rows=rows,
             columns=column_names,
+            table_name=table_name,
         )
 
 
