@@ -43,8 +43,7 @@ def index():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico')
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 @app.route("/base") #base template
 def base():
@@ -134,7 +133,7 @@ def account_details(id):
 
         return render_template("account_details.html", gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
 
-@app.route("/edit_account/<id>") #gets id to load user from db
+@app.route("/account_details/<id>") #gets id to load user from db
 def edit_account(id):
     if request.method == 'POST':
 
