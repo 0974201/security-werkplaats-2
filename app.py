@@ -134,6 +134,27 @@ def account_details(id):
 
         return render_template("account_details.html", gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
 
+@app.route("/edit_account/<id>") #gets id to load user from db
+def edit_account(id):
+    if request.method == 'POST':
+
+        gebruikersnaam = request.form.get('gebruikersnaam')
+        wachtwoord = request.form.get('wachtwoord')
+        admin = request.form.get('admin')
+
+        if admin == "on":
+            admin = 1
+        else:
+            admin = 0
+
+        user.edit_user(gebruikersnaam, wachtwoord, admin, id)
+
+        flash("edited user", 'info')
+        return render_template("admin.html") 
+    else:
+        flash("u done goofed", 'warning')
+        return render_template("admin.html")   
+
 @app.route("/delete_account/<id>") #gets id to load user from db
 def delete_account(id):
         user.delete_user(id)
