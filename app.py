@@ -123,13 +123,12 @@ def admin(table_name="login_test"):
 @app.route("/account_details/<id>") #gets id to load user from db
 def account_details(id):
         user_info = user.get_user(id)
-        user_list = user_info #puts row from db into a list
-        #print(user_list)
+        #print(user_info)
 
-        id = user_list[0]
-        gebruikersnaam = user_list[1]
-        wachtwoord = user_list[2]
-        admin = user_list[3]
+        id = user_info[0]
+        gebruikersnaam = user_info[1]
+        wachtwoord = user_info[2]
+        admin = user_info[3]
 
         #print(f"{id}, {gebruikersnaam}, {wachtwoord}, {admin}")
 
