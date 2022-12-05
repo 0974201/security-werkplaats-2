@@ -11,12 +11,18 @@ def index():
     return render_template("detail-page.html", all_data=data)
 
 
-@app.route("/add_items", methods=["post"])
-def add_items():
-    return request.form["select_items "]
-
-
 def get_db():
+    db = getattr(g, "_database", None)
+    if db is None:
+        db = g._database = sqlite3.connect("databases/testcorrect_vragen.db")
+        cursor = db.cursor()
+        cursor.execute("SELECT*FROM vragen ")
+        all_data = cursor.fetchall()
+    return all_data
+
+
+@app.route("/filter_null")
+def filter_null():
     db = getattr(g, "_database", None)
     if db is None:
         db = g._database = sqlite3.connect("databases/testcorrect_vragen.db")
