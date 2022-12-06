@@ -9,8 +9,8 @@
     width: 100%;
     height: 100%;
     position: relative;
-    background: -webkit-linear-gradient(to right, #8d8b83, #1a368a);
-    background: linear-gradient(to right, #8d8b83, #1a368a);
+    background: -webkit-linear-gradient(to right, #8d8b83, #004df5);
+    background: linear-gradient(to right, #8d8b83, #004df5);
     background-position: center;
     background-size: cover;
     height: 109vh;
@@ -56,14 +56,14 @@ ul li {
 ul li a {
     text-decoration: none;
     color: rgb(255, 255, 255);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'sans-serif';
     font-weight: bold;
     transition: 0.4s ease-in-out;
 
 }
 
 ul li a:hover {
-    color: #1a368a;
+    color: #004df5;
 }
 
 .search {}
@@ -153,18 +153,18 @@ ul li a:hover {
 
 .content .cn a {
     text-decoration-line: none;
-    color: #1a368a;
+    color: #004df5;
     transition: .1s ease;
 
 }
 
 .cn:hover {
-    background-color: #1a368a;
+    background-color: #004df5;
 
 }
 
 .content span {
-    color: #1a368a;
+    color: #004df5;
     font-size: 60px;
 
 }
@@ -172,7 +172,7 @@ ul li a:hover {
 .form {
     width: 250px;
     height: 380px;
-    background: linear-gradient(to top, ) rgb(\, rgb(21, 43, 21), blue);
+    background: linear-gradient(to top, ) rgb(\, rgb(21, 43, 21), #004df5);
     position: absolute;
     top: -20px;
     left: 870px;
@@ -185,7 +185,7 @@ ul li a:hover {
     width: 220px;
     font-family: 'Segoe UI';
     text-align: center;
-    color: #1a368a;
+    color: #004df5;
     font-size: 30px;
     background-color: #fff;
     border-radius: 10px;
@@ -221,20 +221,20 @@ ul li a:hover {
 .btnn {
     width: 240px;
     height: 40px;
-    background: #1a368a;
+    background: #004df5;
     border: none;
     margin-top: 30px;
     font-size: 18px;
     border-radius: 10px;
     cursor: pointer;
-    color: #1a368a;
+    color: #004df5;
     transition: 0.4s ease;
 
 }
 
 .btn:hover {
     background: #fff;
-    color: #1a368a;
+    color: #004df5;
 }
 
 .btn a {
