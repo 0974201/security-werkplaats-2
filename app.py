@@ -56,7 +56,18 @@ def filter_null(table_name=None):
     if not table_name:
         return "Missing table_name", 400
     else:
-        rows, column_names = dbm.check_invalid(table_name, "vraag", "id, vragen")
+        rows, column_names = dbm.check_NULL(table_name, "vraag", "id, vragen")
+        return render_template(
+            "filter_null.html", rows=rows, columns=column_names, table_name=table_name
+        )
+
+
+@app.route("/filter_notnull/<table_name>")
+def filter_not_null(table_name=None):
+    if not table_name:
+        return "Missing table_name", 400
+    else:
+        rows, column_names = dbm.check_NOT_NULL(table_name, "vraag", "id, vragen")
         return render_template(
             "filter_null.html", rows=rows, columns=column_names, table_name=table_name
         )
