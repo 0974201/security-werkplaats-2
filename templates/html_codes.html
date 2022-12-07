@@ -10,19 +10,14 @@
 </head>
 <body>
 <main>
-    <h1>Database onderzoek</h1>
-    <p>Alle rijen in de tabel <b>{{ table_name }}</b>:</p>
-    <button onclick="window.location.href='/invalid_leerdoel/{{ table_name }}'">Ongeldige Leerdoelen</button>
-    <button onclick="window.location.href='/html_codes/{{ table_name }}'">Html codes</button>
+    <h1>HTML Codes</h1>
+    <p>Hier zie je alle html codes in de colom {{columns[2]}}</p>
     <table>
-        <thead>
         <tr>
             {% for column in columns %}
             <th>{{ column }}</th>
             {% endfor %}
         </tr>
-        </thead>
-        <tbody>
         {% for row in rows %}
         <tr>
             {% for field in row %}
@@ -30,10 +25,7 @@
             {% endfor %}
         </tr>
         {% endfor %}
-        </tbody>
-
     </table>
 </main>
 </body>
-
 </html>

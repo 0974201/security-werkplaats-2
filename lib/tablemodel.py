@@ -37,3 +37,12 @@ class DatabaseModel:
         table_content = cursor.fetchall()
         table_headers = [column_name[0] for column_name in cursor.description]
         return table_content, table_headers
+
+    def get_html_codes(self, table_name, column_name):
+        cursor = sqlite3.connect(self.database_file).cursor()
+        cursor.execute(
+            f"SELECT * FROM {table_name} WHERE {column_name} LIKE '%<br>%' OR {column_name} LIKE '%&nbsp;%'"
+        )
+        table_content = cursor.fetchall()
+        table_headers = [column_name[0] for column_name in cursor.description]
+        return table_content, table_headers

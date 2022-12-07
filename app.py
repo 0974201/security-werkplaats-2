@@ -43,13 +43,11 @@ def table_content(table_name=None):
         return "Missing table name", 400  # HTTP 400 = Bad Request
     else:
         rows, column_names = dbm.get_table_content(table_name)
-        check = dbm.check_invalid(table_name, "leerdoel", "id", "leerdoelen")
         return render_template(
             "table_details.html",
             rows=rows,
             columns=column_names,
             table_name=table_name,
-            check=check,
         )
 
 
@@ -64,6 +62,21 @@ def invalid_leerdoel(table_name=None):
         )
         return render_template(
             "invalid_leerdoel.html",
+            rows=rows,
+            columns=column_names,
+            table_name=table_name,
+        )
+
+
+# Html codes in vragen
+@app.route("/html_codes/<table_name>")
+def html_codes(table_name=None):
+    if not table_name:
+        return "Missing table name", 400
+    else:
+        rows, column_names = dbm.get_html_codes(table_name, "vraag")
+        return render_template(
+            "html_codes.html",
             rows=rows,
             columns=column_names,
             table_name=table_name,
