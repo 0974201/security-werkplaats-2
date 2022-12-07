@@ -44,7 +44,21 @@ def table_content(table_name=None):
     else:
         rows, column_names = dbm.get_table_content(table_name)
         return render_template(
-            "table_details.html", rows=rows, columns=column_names, table_name=table_name
+            "table_details.html",
+            rows=rows,
+            columns=column_names,
+            table_name=table_name,
+        )
+
+
+@app.route("/filter_null/<table_name>")
+def filter_null(table_name=None):
+    if not table_name:
+        return "Missing table_name", 400
+    else:
+        rows, column_names = dbm.check_invalid(table_name, "vraag", "id, vragen")
+        return render_template(
+            "filter_null.html", rows=rows, columns=column_names, table_name=table_name
         )
 
 

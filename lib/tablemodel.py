@@ -21,10 +21,18 @@ class DatabaseModel:
     # Given a table name, return the rows and column names
     def get_table_content(self, table_name):
         cursor = sqlite3.connect(self.database_file).cursor()
-        cursor.execute("SELECT*FROM vragen WHERE leerdoel IS NULL")
+        cursor.execute(f"SELECT * FROM {table_name}")
         # An alternative for this 2 var approach is to set a sqlite row_factory on the connection
         table_headers = [column_name[0] for column_name in cursor.description]
         table_content = cursor.fetchall()
 
+        return table_content, table_headers
+
+    def check_invalid(self, table_headers, table_content, cursor):
+        cursor = sqlite3.connect(self.database_file).cursor()
+        cursor.execute("SELECT*FROM vragen WHERE leerdoel IS NULL")
+        table_headers = [column_name[0] for column_name in cursor.description]
+        table_content = cursor.fetchall()
         # Note that this method returns 2 variables!
+
         return table_content, table_headers

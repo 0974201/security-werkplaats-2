@@ -2,16 +2,39 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="utf-8" />
+  <title>Database displayer</title>
+  <meta name="description" content="Simple database display" />
+  <meta name="author" content="Rotterdam Academy" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/static/basic.css" type="text/css">
 </head>
 
 <body>
-  <div>
-    <button href="/templates/detail_page.html"></button>
-  </div>
+  <main>
+    <h1>Database onderzoek</h1>
+    <p>Alle NULL waardes <b>{{ table_name }} tabel</b>:</p>
+
+    <table>
+      <thead>
+        <tr>
+          {% for column in columns %}
+          <th>{{ column }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          {% for field in row %}
+          <td>{{ field }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </main>
 </body>
 
 </html>
