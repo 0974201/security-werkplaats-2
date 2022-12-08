@@ -16,9 +16,9 @@ FLASK_DEBUG = True
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'dit-is-een-geheime-sleutel'
+app.config["SECRET_KEY"] = "dit-is-een-geheime-sleutel"
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
-DATABASE_FILE = os.path.join(app.root_path, 'databases', 'testcorrect_kopie.db')
+DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_kopie.db")
 
 # Check if the database file exists. If not, create a demo database
 if not os.path.isfile(DATABASE_FILE):
@@ -39,16 +39,20 @@ def index():
         "tables.html", table_list=tables, database_file=DATABASE_FILE
     )
 
-@app.route("/login") #test login template
+
+@app.route("/login")  # test login template
 def login():
     return render_template("login.html")
 
-@app.route("/login", methods = ['POST']) # login post, it works for now i guess??
+
+@app.route("/login", methods=["POST"])  # login post, it works for now i guess??
 def login_post():
-    if request.method == 'POST':
-        gebruikersnaam = request.form.get('gebruikersnaam')
-        wachtwoord = request.form.get('wachtwoord')
-        check_user = user.check_user(gebruikersnaam, wachtwoord) #checks if user is in db, returns none if not present
+    if request.method == "POST":
+        gebruikersnaam = request.form.get("gebruikersnaam")
+        wachtwoord = request.form.get("wachtwoord")
+        check_user = user.check_user(
+            gebruikersnaam, wachtwoord
+        )  # checks if user is in db, returns none if not present
         if check_user:
             return redirect(url_for("login_success"))
         elif check_user == None:
@@ -57,10 +61,12 @@ def login_post():
     else:
         return render_template("login.html")
 
-@app.route("/login_success") #should show up after successful post
-#@login_required
+
+@app.route("/login_success")  # should show up after successful post
+# @login_required
 def login_success():
     return render_template("login_success.html")
+
 
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")
@@ -73,9 +79,11 @@ def table_content(table_name=None):
             "table_details.html", rows=rows, columns=column_names, table_name=table_name
         )
 
-@app.route("/teapot") #test
+
+@app.route("/teapot")  # test
 def test():
-    return render_template("test.html"), 418       
+    return render_template("test.html"), 418
+
 
 if __name__ == "__main__":
     app.run(host=FLASK_IP, port=FLASK_PORT, debug=FLASK_DEBUG)
