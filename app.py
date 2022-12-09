@@ -2,6 +2,8 @@ import os.path
 import sys
 
 from flask import Flask, render_template
+import MySQL
+
 
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
@@ -45,6 +47,15 @@ def table_content(table_name=None):
         rows, column_names = dbm.get_table_content(table_name)
         return render_template(
             "table_details.html", rows=rows, columns=column_names, table_name=table_name
+        )
+@app.route("/id/<table_name>")
+def id_html(table_name=None):
+    if not table_name:
+        return "Missing table name", 400  # HTTP 400 = Bad Request
+    else:
+        rows, column_names = dbm.get_table_content(table_name)
+        return render_template(
+            "id.html", rows=rows, columns=column_names, table_name=table_name
         )
 
 if __name__ == "__main__":
