@@ -1,10 +1,11 @@
 import os.path
 import sys
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
+from lib.manageuser import *
 
 # This demo glues a random database and the Flask framework. If the database file does not exist,
 # a simple demo dataset will be created.
@@ -14,14 +15,17 @@ FLASK_PORT = 81
 FLASK_DEBUG = True
 
 app = Flask(__name__)
+
+app.config["SECRET_KEY"] = "dit-is-een-geheime-sleutel"
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
-DATABASE_FILE = os.path.join(app.root_path, 'databases', 'testcorrect_vragen.db')
+DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_kopie.db")
 
 # Check if the database file exists. If not, create a demo database
 if not os.path.isfile(DATABASE_FILE):
     print(f"Could not find database {DATABASE_FILE}, creating a demo database.")
     create_demo_database(DATABASE_FILE)
 dbm = DatabaseModel(DATABASE_FILE)
+user = ManageUser(DATABASE_FILE)
 
 # Main route that shows a list of tables in the database
 # Note the "@app.route" decorator. This might be a new concept for you.
@@ -41,6 +45,34 @@ def bla():
     )
 
 
+@app.route("/login")  # test login template
+def login():
+    return render_template("login.html")
+
+
+@app.route("/login", methods=["POST"])  # login post, it works for now i guess??
+def login_post():
+    if request.method == "POST":
+        gebruikersnaam = request.form.get("gebruikersnaam")
+        wachtwoord = request.form.get("wachtwoord")
+        check_user = user.check_user(
+            gebruikersnaam, wachtwoord
+        )  # checks if user is in db, returns none if not present
+        if check_user:
+            return redirect(url_for("login_success"))
+        elif check_user == None:
+            flash("Gebruikersnaam of wachtwoord klopt niet.")
+            return render_template("login.html")
+    else:
+        return render_template("login.html")
+
+
+@app.route("/login_success")  # should show up after successful post
+# @login_required
+def login_success():
+    return render_template("login_success.html")
+
+
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>", methods = ("POST", "GET")) 
 def table_content(table_name=None):
@@ -57,6 +89,12 @@ def table_content(table_name=None):
             "table_details.html", rows=rows, columns=column_names, table_name=table_name
             
         )
+
+
+@app.route("/teapot")  # test
+def test():
+    return render_template("test.html"), 418
+
 
 if __name__ == "__main__":
     app.run(host=FLASK_IP, port=FLASK_PORT, debug=FLASK_DEBUG)
