@@ -19,7 +19,7 @@ class DatabaseModel:
         return tables
 
     # Given a table name, return the rows and column names
-    def get_table_content(self, table_name):
+    def get_table_content(self, table_name, min, max):
         cursor = sqlite3.connect(self.database_file).cursor()
         cursor.execute(f"SELECT * FROM {table_name}")
         # An alternative for this 2 var approach is to set a sqlite row_factory on the connection
@@ -28,3 +28,5 @@ class DatabaseModel:
 
         # Note that this method returns 2 variables!
         return table_content, table_headers
+    
+

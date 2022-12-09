@@ -1,7 +1,7 @@
 import os.path
 import sys
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
@@ -28,8 +28,13 @@ dbm = DatabaseModel(DATABASE_FILE)
 # It is a way to "decorate" a function with additional functionality. You
 # can safely ignore this for now - or look into it as it is a really powerful
 # concept in Python.
+
 @app.route("/")
 def index():
+    return render_template('index.html')
+
+@app.route("/bla")
+def bla():
     tables = dbm.get_table_list()
     return render_template(
         "tables.html", table_list=tables, database_file=DATABASE_FILE
@@ -37,15 +42,23 @@ def index():
 
 
 # The table route displays the content of a table
-@app.route("/table_details/<table_name>")
+@app.route("/table_details/<table_name>", methods = ("POST", "GET")) 
 def table_content(table_name=None):
     if not table_name:
         return "Missing table name", 400  # HTTP 400 = Bad Request
     else:
-        rows, column_names = dbm.get_table_content(table_name)
+        if request.method== "POST":
+            min = request.form["min"]
+            max = request.form["max"]
+
+        
+        rows, column_names = dbm.get_table_content(table_name, min, max)
         return render_template(
             "table_details.html", rows=rows, columns=column_names, table_name=table_name
+            
         )
 
 if __name__ == "__main__":
     app.run(host=FLASK_IP, port=FLASK_PORT, debug=FLASK_DEBUG)
+
+
