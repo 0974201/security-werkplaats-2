@@ -8,7 +8,7 @@
 {% block content %}
     <h1>Gegevens van {{gebruikersnaam}}</h1>
 
-    <form method="POST" action="/account_details/<id>">
+    <form method="POST" action="/editaccount/{{id}}">
         <label for="gebruikersnaam">Gebruikersnaam:</label><br>
         <input type="text" name="gebruikersnaam" value="{{gebruikersnaam}}" readonly><br/>
         <label for="wachtwoord">Wachtwoord:</label><br/>

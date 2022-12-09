@@ -37,7 +37,8 @@ class ManageUser:
             #SQL statement to update an existing user
             update_user_qry = "UPDATE login_test SET gebruikersnaam = ?, wachtwoord = ?, is_admin = ? WHERE user_id = ?"
             edit_user = (username, password, admin, id)
-        
+            print(edit_user)
+            
             cursor.execute(update_user_qry, edit_user)
             connection.commit()
 

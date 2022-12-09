@@ -131,12 +131,13 @@ def account_details(id):
 
         #print(f"{id}, {gebruikersnaam}, {wachtwoord}, {admin}")
 
-        return render_template("account_details.html", gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
+        return render_template("account_details.html",id = id, gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
 
-@app.route("/account_details/<id>") #gets id to load user from db
-def edit_account(id):
+@app.route("/editaccount/<id>", methods = ['GET', 'POST']) #gets id to load user from db
+def edit_account_post(id):
     if request.method == 'POST':
-
+        id = id
+        print(id)
         gebruikersnaam = request.form.get('gebruikersnaam')
         wachtwoord = request.form.get('wachtwoord')
         admin = request.form.get('admin')
