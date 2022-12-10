@@ -136,8 +136,7 @@ def account_details(id):
 @app.route("/editaccount/<id>", methods = ['GET', 'POST']) #gets id to load user from db
 def edit_account_post(id):
     if request.method == 'POST':
-        id = id
-        print(id)
+        
         gebruikersnaam = request.form.get('gebruikersnaam')
         wachtwoord = request.form.get('wachtwoord')
         admin = request.form.get('admin')
