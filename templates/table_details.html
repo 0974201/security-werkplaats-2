@@ -12,14 +12,15 @@
 <main>
     <h1>Database onderzoek</h1>
 
-        <select name="id" class="DatabaseModel" form-control>
+        <SELECT name="id" class="DatabaseModel" form-control>
             <option value="id">id</option>
             <option value="leerdoel">leerdoel</option>
             <option value="auteurs">auteur</option>
               {% for column in data %}
               <option value="{{ column }}">{{ columns }}</option>
               {% endfor %}
-            </select>
+            </SELECT>
+
         <br><br>
         <input type="submit" value="Zoek">
       </form>
