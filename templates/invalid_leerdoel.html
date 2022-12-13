@@ -12,6 +12,7 @@
 <main>
     <h1>Ongeldige leerdoelen</h1>
     <p>Hier zie je alle ongeldige leerdoelen in de {{ table_name }} tabel</p>
+    <button onclick="window.location.href='/csv_export_invalid/{{ table_name }}'">Exporteer naar csv</button>
     <table>
         <tr>
             {% for column in columns %}

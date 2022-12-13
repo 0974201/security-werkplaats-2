@@ -1,7 +1,10 @@
 import os.path
 import sys
 
-from flask import Flask, render_template
+import io
+import csv
+
+from flask import Flask, render_template, make_response, request
 
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
@@ -81,6 +84,59 @@ def html_codes(table_name=None):
             columns=column_names,
             table_name=table_name,
         )
+
+
+# Full table
+@app.route("/csv_export_full/<table_name>")
+def csv_export_full(table_name=None):
+    if not table_name:
+        return "Missing table name", 400
+    else:
+        rows, column_names = dbm.get_table_content(table_name)
+        si = io.StringIO()
+        cw = csv.writer(si)
+        cw.writerow(column_names)
+        cw.writerows(rows)
+        output = make_response(si.getvalue())
+        output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+        output.headers["Content-type"] = "text/csv"
+        return output
+
+
+# Invalid leerdoel
+@app.route("/csv_export_invalid/<table_name>")
+def csv_export_invalid(table_name=None):
+    if not table_name:
+        return "Missing table name", 400
+    else:
+        rows, column_names = dbm.check_invalid(
+            table_name, "leerdoel", "id", "leerdoelen"
+        )
+        si = io.StringIO()
+        cw = csv.writer(si)
+        cw.writerow(column_names)
+        cw.writerows(rows)
+        output = make_response(si.getvalue())
+        output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+        output.headers["Content-type"] = "text/csv"
+        return output
+
+
+# Html codes in vragen
+@app.route("/csv_export_html/<table_name>")
+def csv_export_html(table_name=None):
+    if not table_name:
+        return "Missing table name", 400
+    else:
+        rows, column_names = dbm.get_html_codes(table_name, "vraag")
+        si = io.StringIO()
+        cw = csv.writer(si)
+        cw.writerow(column_names)
+        cw.writerows(rows)
+        output = make_response(si.getvalue())
+        output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+        output.headers["Content-type"] = "text/csv"
+        return output
 
 
 if __name__ == "__main__":
