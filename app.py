@@ -19,6 +19,7 @@ FLASK_DEBUG = True
 app = Flask(__name__)
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
 DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db")
+DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db")
 
 # Check if the database file exists. If not, create a demo database
 if not os.path.isfile(DATABASE_FILE):
@@ -31,8 +32,15 @@ dbm = DatabaseModel(DATABASE_FILE)
 # It is a way to "decorate" a function with additional functionality. You
 # can safely ignore this for now - or look into it as it is a really powerful
 # concept in Python.
+
+
 @app.route("/")
 def index():
+    return render_template("index.html")
+
+
+@app.route("/bla")
+def bla():
     tables = dbm.get_table_list()
     return render_template(
         "tables.html", table_list=tables, database_file=DATABASE_FILE
@@ -137,6 +145,25 @@ def csv_export_html(table_name=None):
         output.headers["Content-Disposition"] = "attachment; filename=export.csv"
         output.headers["Content-type"] = "text/csv"
         return output
+
+
+
+@app.route("/max_value/<table_name>", methods=["POST"])
+def min_max(table_name=None):
+    if not table_name:
+        return "Missing table name", 400
+    else:
+        num1 = request.form["min"]
+        num2 = request.form["max"]
+        rows, column_names = dbm.get_min_max(table_name, num1, num2)
+        return render_template(
+            "table_details.html",
+            rows=rows,
+            columns=column_names,
+            table_name=table_name,
+            num1=num1,
+            num2=num2,
+        )
 
 
 if __name__ == "__main__":

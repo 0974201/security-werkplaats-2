@@ -10,28 +10,8 @@
 </head>
 <body>
 <main>
-
-    <div>
-        <form action="/max_value/{{table_name}}" method="post">
-            <label for="min">Min:</label><br>
-            <input type="text" id="min" name="min"><br>
-            <label for="max">Max:</label><br>
-            <input type="text" id="max" name="max"><br><br>
-            <input type="submit" value="Submit">
-          </form> 
-
-    </div>
-
-    <h1>
-
     <h1>Database onderzoek</h1>
     <p>Alle rijen in de tabel <b>{{ table_name }}</b>:</p>
-    {% if table_name == "vragen": %}
-        <button onclick="window.location.href='/invalid_leerdoel/{{ table_name }}'">Ongeldige Leerdoelen</button>
-        <button onclick="window.location.href='/html_codes/{{ table_name }}'">Html codes</button>
-    {% endif %}
-    <button onclick="window.location.href='/csv_export_full/{{ table_name }}'">Exporteer naar csv</button>
-    <button onclick="window.location.href='/max_value/{{table_name}}'">max values</button>
     <table>
         <thead>
         <tr>
