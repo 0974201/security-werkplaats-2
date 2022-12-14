@@ -11,9 +11,10 @@
 <body>
 <main>
     <h1>Database onderzoek</h1>
-
+        {% if table_name == "vragen":%}
         <button onclick="window.location.href= '/id/{{ table_name }}'">id</button>
         <button onclick="window.location.href= '/leerdoel/{{ table_name }}'">leerdoel</button>
+        {% endif %}
 {#        <button onclick="window.location.href= '/vraag/{{ table_name }}'">vraag</button>#}
 
 {#        <SELECT  onclick="window.location.href= '/id.html'{{ table_name }} name="id" class="DatabaseModel" form-control>#}
