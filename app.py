@@ -35,16 +35,16 @@ dbm = DatabaseModel(DATABASE_FILE)
 
 
 @app.route("/")
-def index():
-    return render_template("index.html")
-
-
-@app.route("/bla")
-def bla():
+def tables():
     tables = dbm.get_table_list()
     return render_template(
         "tables.html", table_list=tables, database_file=DATABASE_FILE
     )
+
+
+@app.route("/home")
+def index():
+    return render_template("index.html")
 
 
 # The table route displays the content of a table
@@ -145,7 +145,6 @@ def csv_export_html(table_name=None):
         output.headers["Content-Disposition"] = "attachment; filename=export.csv"
         output.headers["Content-type"] = "text/csv"
         return output
-
 
 
 @app.route("/max_value/<table_name>", methods=["POST"])
