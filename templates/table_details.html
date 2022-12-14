@@ -12,7 +12,7 @@
 <main>
 
     <div>
-        <form method="post">
+        <form action="/max_value/{{table_name}}" method="post">
             <label for="min">Min:</label><br>
             <input type="text" id="min" name="min"><br>
             <label for="max">Max:</label><br>
@@ -27,7 +27,8 @@
     <h1>Database onderzoek</h1>
     <p>Alle rijen in de tabel <b>{{ table_name }}</b>:</p>
     {%if table_name == "vragen":%}
-    <button onclick="window.location.href='/max_value/{{table_name}}'">max values</button>
+        <button onclick="window.location.href='/max_value/{{table_name}}'">max values</button>
+    {%endif%}
     <table>
         <thead>
         <tr>

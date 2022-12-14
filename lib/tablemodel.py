@@ -28,13 +28,13 @@ class DatabaseModel:
 
         # Note that this method returns 2 variables!
         return table_content, table_headers
-    
-    def get_table_content(self, table_name,table_content, num1, num2):
-            cursor = sqlite3.connect(self.database_file).cursor()
-            cursor.execute(f"SELECT * FROM {table_name} WHERE id BETWEEN {num1} and {num2}")
-            # An alternative for this 2 var approach is to set a sqlite row_factory on the connection
-            table_headers = [column_name[0] for column_name in cursor.description]
-            table_content = cursor.fetchall()
 
-            # Note that this method returns 2 variables!
-            return table_content, table_headers
+    def get_min_max(self, table_name, num1, num2):
+        cursor = sqlite3.connect(self.database_file).cursor()
+        cursor.execute(f"SELECT * FROM {table_name} WHERE id BETWEEN {num1} and {num2}")
+        # An alternative for this 2 var approach is to set a sqlite row_factory on the connection
+        table_headers = [column_name[0] for column_name in cursor.description]
+        table_content = cursor.fetchall()
+
+        # Note that this method returns 2 variables!
+        return table_content, table_headers

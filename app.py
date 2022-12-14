@@ -15,7 +15,7 @@ FLASK_DEBUG = True
 
 app = Flask(__name__)
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
-DATABASE_FILE = os.path.join(app.root_path, 'databases', 'testcorrect_vragen.db')
+DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db")
 
 # Check if the database file exists. If not, create a demo database
 if not os.path.isfile(DATABASE_FILE):
@@ -29,9 +29,11 @@ dbm = DatabaseModel(DATABASE_FILE)
 # can safely ignore this for now - or look into it as it is a really powerful
 # concept in Python.
 
+
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
+
 
 @app.route("/bla")
 def bla():
@@ -42,7 +44,7 @@ def bla():
 
 
 # The table route displays the content of a table
-@app.route("/table_details/<table_name>") 
+@app.route("/table_details/<table_name>")
 def table_content(table_name=None):
     if not table_name:
         return "Missing table name", 400  # HTTP 400 = Bad Request
@@ -50,22 +52,26 @@ def table_content(table_name=None):
         rows, column_names = dbm.get_table_content(table_name)
         return render_template(
             "table_details.html", rows=rows, columns=column_names, table_name=table_name
-            
         )
 
-@app.route("/max_value/<table_name>") 
-def max_value(table_name=None):
+
+@app.route("/max_value/<table_name>", methods=["POST"])
+def min_max(table_name=None):
     if not table_name:
-        return "Missing table name", 400  # HTTP 400 = Bad Request
+        return "Missing table name", 400
     else:
-        rows, column_names = dbm.check_max_value(table_name,"vraag", "id","vragen" )
+        num1 = request.form["min"]
+        num2 = request.form["max"]
+        rows, column_names = dbm.get_min_max(table_name, num1, num2)
         return render_template(
-            "max_value.html", rows=rows, columns=column_names, table_name=table_name
-            
+            "table_details.html",
+            rows=rows,
+            columns=column_names,
+            table_name=table_name,
+            num1=num1,
+            num2=num2,
         )
 
 
 if __name__ == "__main__":
     app.run(host=FLASK_IP, port=FLASK_PORT, debug=FLASK_DEBUG)
-
-
