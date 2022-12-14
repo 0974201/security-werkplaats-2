@@ -64,7 +64,7 @@ def leerdoel_html(table_name=None):
     if not table_name:
         return "Missing table name", 400  # HTTP 400 = Bad Request
     else:
-        rows, column_names = dbm.get_id_html(table_name, "leerdoel.html" , "vragen" )
+        rows, column_names = dbm.get_leerdoel_html(table_name, "leerdoel.html" , "vragen" )
         return render_template(
             "leerdoel.html", rows=rows, columns=column_names, table_name=table_name)
 #
