@@ -4,7 +4,17 @@ import sys
 import io
 import csv
 
-from flask import Flask, render_template, session, redirect, url_for, make_response, request, flash, send_from_directory
+from flask import (
+    Flask,
+    render_template,
+    session,
+    redirect,
+    url_for,
+    make_response,
+    request,
+    flash,
+    send_from_directory,
+)
 
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
@@ -21,7 +31,7 @@ app = Flask(__name__)
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
 DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db")
 
-app.config['SECRET_KEY'] = 'dit-is-een-secret-key'
+app.config["SECRET_KEY"] = "dit-is-een-secret-key"
 
 # Check if the database file exists. If not, create a demo database
 if not os.path.isfile(DATABASE_FILE):
@@ -29,7 +39,7 @@ if not os.path.isfile(DATABASE_FILE):
     create_demo_database(DATABASE_FILE)
 dbm = DatabaseModel(DATABASE_FILE)
 
-user = ManageUser(DATABASE_FILE) #for manageuser class
+user = ManageUser(DATABASE_FILE)  # for manageuser class
 
 # Main route that shows a list of tables in the database
 # Note the "@app.route" decorator. This might be a new concept for you.
@@ -40,18 +50,22 @@ user = ManageUser(DATABASE_FILE) #for manageuser class
 
 @app.route("/")
 def index():
-    return render_template("index.html")
-
-
-#favicon
-@app.route('/favicon.ico')
-def favicon():
     tables = dbm.get_table_list()
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+    return render_template(
+        "tables.html", table_list=tables, database_file=DATABASE_FILE
+    )
+
+
+# favicon
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, "static"), "favicon.ico")
+
 
 @app.route("/home")
 def home():
     return render_template("index.html")
+
 
 @app.route("/table")
 def tables():
@@ -178,25 +192,32 @@ def min_max(table_name=None):
             num2=num2,
         )
 
-@app.route("/login") #test login template
+
+@app.route("/login")  # test login template
 def login():
     return render_template("login.html")
 
-@app.route("/login", methods = ['POST']) # login post, it works for now i guess??
+
+@app.route("/login", methods=["POST"])  # login post, it works for now i guess??
 def login_post():
-    if request.method == 'POST':
-        gebruikersnaam = request.form.get('gebruikersnaam')
-        wachtwoord = request.form.get('wachtwoord')
-        check_user = user.login_user(gebruikersnaam, wachtwoord) #checks if user is in db, returns none if not present
+    if request.method == "POST":
+        gebruikersnaam = request.form.get("gebruikersnaam")
+        wachtwoord = request.form.get("wachtwoord")
+        check_user = user.login_user(
+            gebruikersnaam, wachtwoord
+        )  # checks if user is in db, returns none if not present
         if check_user:
             return redirect(url_for("tables"))
         elif check_user == None:
-            flash("Gegevens kloppen niet", 'warning')
+            flash("Gegevens kloppen niet", "warning")
             return render_template("INDEX.html")
     else:
         return render_template("login.html")
 
-@app.route("/admin") #copypasta from table display but points specifically to the user table
+
+@app.route(
+    "/admin"
+)  # copypasta from table display but points specifically to the user table
 def admin(table_name="users"):
     if not table_name:
         return "Missing table name", 400  # HTTP 400 = Bad Request
@@ -206,16 +227,18 @@ def admin(table_name="users"):
             "admin.html", rows=rows, columns=column_names, table_name=table_name
         )
 
-@app.route("/adduser") #test add user template
+
+@app.route("/adduser")  # test add user template
 def adduser():
     return render_template("adduser.html")
 
-@app.route("/adduser", methods = ['POST']) #code to add values from form to db
+
+@app.route("/adduser", methods=["POST"])  # code to add values from form to db
 def adduser_post():
-    if request.method == 'POST':
-        gebruikersnaam = request.form.get('gebruikersnaam') #gets username from form
-        wachtwoord = request.form.get('wachtwoord')
-        admin = request.form.get('admin')
+    if request.method == "POST":
+        gebruikersnaam = request.form.get("gebruikersnaam")  # gets username from form
+        wachtwoord = request.form.get("wachtwoord")
+        admin = request.form.get("admin")
 
         if admin == "on":
             admin = 1
@@ -224,30 +247,40 @@ def adduser_post():
 
         user.add_new_user(gebruikersnaam, wachtwoord, admin)
 
-        flash("Gebruiker aangemaakt!", 'info') #shows after successfull user creattoion
+        flash(
+            "Gebruiker aangemaakt!", "info"
+        )  # shows after successfull user creattoion
         return redirect("admin.html")
     else:
-        flash("Er ging iets mis.", 'warning')
+        flash("Er ging iets mis.", "warning")
         return render_template("adduser.html")
 
-@app.route("/user_details/<id>") #gets id to load user from db
+
+@app.route("/user_details/<id>")  # gets id to load user from db
 def user_details(id):
-        user_info = user.get_user(id)
+    user_info = user.get_user(id)
 
-        id = user_info[0]
-        gebruikersnaam = user_info[1]
-        wachtwoord = user_info[2]
-        admin = user_info[3]
+    id = user_info[0]
+    gebruikersnaam = user_info[1]
+    wachtwoord = user_info[2]
+    admin = user_info[3]
 
-        return render_template("user_details.html",id = id, gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
+    return render_template(
+        "user_details.html",
+        id=id,
+        gebruikersnaam=gebruikersnaam,
+        wachtwoord=wachtwoord,
+        admin=admin,
+    )
 
-@app.route("/editaccount/<id>", methods = ['GET', 'POST']) #gets id to load user from db
+
+@app.route("/editaccount/<id>", methods=["GET", "POST"])  # gets id to load user from db
 def edit_account_post(id):
-    if request.method == 'POST':
-        
-        gebruikersnaam = request.form.get('gebruikersnaam')
-        wachtwoord = request.form.get('wachtwoord')
-        admin = request.form.get('admin')
+    if request.method == "POST":
+
+        gebruikersnaam = request.form.get("gebruikersnaam")
+        wachtwoord = request.form.get("wachtwoord")
+        admin = request.form.get("admin")
 
         if admin == "on":
             admin = 1
@@ -256,75 +289,19 @@ def edit_account_post(id):
 
         user.edit_user(gebruikersnaam, wachtwoord, admin, id)
 
-        flash("Gebruiker bewerkt!", 'info')
-        return render_template("admin.html") 
+        flash("Gebruiker bewerkt!", "info")
+        return render_template("admin.html")
     else:
-        flash("Er ging iets mis.", 'warning')
-        return render_template("admin.html")   
-
-@app.route("/delete_account/<id>") #gets id to load user from db
-def delete_account(id):
-        user.delete_user(id)
-
-        flash("yeet", 'warning')
+        flash("Er ging iets mis.", "warning")
         return render_template("admin.html")
 
-#Danilo
-@app.route("/table_details/<table_name>")
-def table_content(table_name=None):
-    if not table_name:
-        return "Missing table name", 400  # HTTP 400 = Bad Request
-    else:
-        rows, column_names = dbm.get_table_content(table_name)
-        return render_template(
-            "table_details.html", rows=rows, columns=column_names, table_name=table_name
-        )
-@app.route("/id/<table_name>")
-def id_html(table_name=None):
-    if not table_name:
-        return "Missing table name", 400  # HTTP 400 = Bad Request
-    else:
-        rows, column_names = dbm.get_id_html(table_name, "id.html" , "vragen" )
-        return render_template(
-            "id.html", rows=rows, columns=column_names, table_name=table_name)
 
+@app.route("/delete_account/<id>")  # gets id to load user from db
+def delete_account(id):
+    user.delete_user(id)
 
-@app.route("/leerdoel/<table_name>")
-def leerdoel_html(table_name=None):
-    if not table_name:
-        return "Missing table name", 400  # HTTP 400 = Bad Request
-    else:
-        rows, column_names = dbm.get_leerdoel_html(table_name, "leerdoel.html" , "vragen" )
-        return render_template(
-            "leerdoel.html", rows=rows, columns=column_names, table_name=table_name)
-@app.route("/vraag/<table_name>")
-def vraag_html(table_name=None):
-    if not table_name:
-        return "Missing table name", 400  # HTTP 400 = Bad Request
-    else:
-        rows, column_names = dbm.get_vraag_html(table_name, "vraag.html" , "vragen" )
-        return render_template(
-            "vraag.html", rows=rows, columns=column_names, table_name=table_name)
-
-@app.route("/auteur/<table_name>")
-def auteur_html(table_name=None):
-    if not table_name:
-        return "Missing table name", 400  # HTTP 400 = Bad Request
-    else:
-        rows, column_names = dbm.get_auteur_html(table_name, "auteur.html" , "vragen" )
-        return render_template(
-            "auteur.html", rows=rows, columns=column_names, table_name=table_name)
-# @app.route(table_content, methods= ['GET', 'POST'])
-#
-# def tabledata(columns):
-#     if request.method == "POST":
-#         col = request.form.get('column')
-#
-#     else:
-#         columns = ['vraag']
-#         columnslist = ['vraag', 'leerdoel', 'id']
-#         data = table_content(columns)
-#     return render_template("table_details.html", data = data, columns = columnslist)
+    flash("yeet", "warning")
+    return render_template("admin.html")
 
 
 if __name__ == "__main__":
