@@ -194,6 +194,78 @@ def login_post():
     else:
         return render_template("login.html")
 
+@app.route("/admin") #copypasta from table display but points specifically to the user table
+def admin(table_name="users"):
+    if not table_name:
+        return "Missing table name", 400  # HTTP 400 = Bad Request
+    else:
+        rows, column_names = dbm.get_admin_table_content(table_name)
+        return render_template(
+            "admin.html", rows=rows, columns=column_names, table_name=table_name
+        )
+
+@app.route("/adduser") #test add user template
+def adduser():
+    return render_template("adduser.html")
+
+@app.route("/adduser", methods = ['POST']) #code to add values from form to db
+def adduser_post():
+    if request.method == 'POST':
+        gebruikersnaam = request.form.get('gebruikersnaam') #gets username from form
+        wachtwoord = request.form.get('wachtwoord')
+        admin = request.form.get('admin')
+
+        if admin == "on":
+            admin = 1
+        else:
+            admin = 0
+
+        user.add_new_user(gebruikersnaam, wachtwoord, admin)
+
+        flash("user created", 'info') #shows after successfull user creattoion
+        return redirect("admin.html")
+    else:
+        flash("u done goofed", 'warning')
+        return render_template("adduser.html")
+
+@app.route("/user_details/<id>") #gets id to load user from db
+def user_details(id):
+        user_info = user.get_user(id)
+
+        id = user_info[0]
+        gebruikersnaam = user_info[1]
+        wachtwoord = user_info[2]
+        admin = user_info[3]
+
+        return render_template("user_details.html",id = id, gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
+
+@app.route("/editaccount/<id>", methods = ['GET', 'POST']) #gets id to load user from db
+def edit_account_post(id):
+    if request.method == 'POST':
+        
+        gebruikersnaam = request.form.get('gebruikersnaam')
+        wachtwoord = request.form.get('wachtwoord')
+        admin = request.form.get('admin')
+
+        if admin == "on":
+            admin = 1
+        else:
+            admin = 0
+
+        user.edit_user(gebruikersnaam, wachtwoord, admin, id)
+
+        flash("edited user", 'info')
+        return render_template("admin.html") 
+    else:
+        flash("u done goofed", 'warning')
+        return render_template("admin.html")   
+
+@app.route("/delete_account/<id>") #gets id to load user from db
+def delete_account(id):
+        user.delete_user(id)
+
+        flash("yeet", 'warning')
+        return render_template("admin.html")
 
 if __name__ == "__main__":
     app.run(host=FLASK_IP, port=FLASK_PORT, debug=FLASK_DEBUG)
