@@ -26,7 +26,24 @@ class DatabaseModel:
         table_headers = [column_name[0] for column_name in cursor.description]
         table_content = cursor.fetchall()
 
+        return table_content, table_headers
+
+    def check_NULL(self, table_headers, table_content, cursor):
+        cursor = sqlite3.connect(self.database_file).cursor()
+        cursor.execute("SELECT*FROM vragen WHERE leerdoel IS NULL")
+        table_headers = [column_name[0] for column_name in cursor.description]
+        table_content = cursor.fetchall()
         # Note that this method returns 2 variables!
+
+        return table_content, table_headers
+
+    def check_NOT_NULL(self, table_headers, table_content, cursor):
+        cursor = sqlite3.connect(self.database_file).cursor()
+        cursor.execute("SELECT*FROM vragen WHERE leerdoel IS NOT NULL")
+        table_headers = [column_name[0] for column_name in cursor.description]
+        table_content = cursor.fetchall()
+        # Note that this method returns 2 variables!
+
         return table_content, table_headers
 
     def check_invalid(self, table_name, column_name, column_name2, table_name2):

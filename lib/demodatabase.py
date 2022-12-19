@@ -24,5 +24,6 @@ def create_demo_database(database_file):
         cursor.execute(
             "INSERT INTO demo (first_name, last_name, email) VALUES (?, ?, ?)", pair
         )
+
     connection.commit()
     connection.close()
