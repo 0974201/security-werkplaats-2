@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <title>Database displayer</title>
-    <meta name="description" content="Simple database display"/>
-    <meta name="author" content="Rotterdam Academy"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="/static/basic.css" type="text/css">
-</head>
-<body>
-<main>
+{% extends "base.html" %}
+
+{% block title %}Max waarde{% endblock %}
+{% block content %}
     <h1>Database onderzoek</h1>
     <p>Alle rijen in de tabel <b>{{ table_name }}</b>:</p>
     <table>
@@ -31,7 +23,4 @@
         </tbody>
 
     </table>
-</main>
-</body>
-
-</html>
+{% endblock %}

@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <title>Database displayer</title>
-    <meta name="description" content="Simple database display"/>
-    <meta name="author" content="Rotterdam Academy"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="/static/basic.css" type="text/css">
-</head>
-<body>
-<main>
+{% extends "base.html" %}
+
+{% block title %}HTML Codes{% endblock %}
+{% block content %}
     <h1>HTML Codes</h1>
     <p>Hier zie je alle html codes in de colom {{columns[2]}}</p>
     <button onclick="window.location.href='/csv_export_html/{{ table_name }}'">Exporteer naar csv</button>
@@ -27,6 +19,4 @@
         </tr>
         {% endfor %}
     </table>
-</main>
-</body>
-</html>
+{% endblock %}

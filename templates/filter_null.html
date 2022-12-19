@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-  <meta charset="utf-8" />
-  <title>Database displayer</title>
-  <meta name="description" content="Simple database display" />
-  <meta name="author" content="Rotterdam Academy" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="/static/basic.css" type="text/css">
-</head>
-
-<body>
-  <main>
+{% block title %}Filter Null{% endblock %}
+{% block content %}
     <h1>Database onderzoek</h1>
     <p>Alle NULL waardes <b>{{ table_name }} tabel</b>:</p>
 
@@ -34,7 +24,4 @@
       </tbody>
 
     </table>
-  </main>
-</body>
-
-</html>
+{% endblock %}

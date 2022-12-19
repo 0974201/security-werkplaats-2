@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends "base.html" %}
 
-    <title>Homepage Test correct</title>
-    <link rel="stylesheet" href="static/style.css">
-</head>
-<body>
+{% block title %}Home{% endblock %}
+{% block content %}
     <div class="main">
         <div class="header">
             <div class="icon">
@@ -14,11 +10,8 @@
             
             <div class="menu">
                 <ul>
-                    <li><a href="#">Oplossingen</a></li>
-                    <li><a href="#">Producten</a></li>
-                    <li><a href="#">Service</a></li>
-                    <li><a href="#">Studenten</a></li>
-                    <li><a href="#">Docenten</a></li>
+                    <li><a href="/table">Tabellen</a></li>
+                    <li><a href="/login">Inloggen</a></li>
                 </ul>
             </div>
         </div>
@@ -44,5 +37,4 @@
             </div>
         </div> 
     </div>   
-</body>
-</html>
+{% endblock %}

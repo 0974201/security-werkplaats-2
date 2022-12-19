@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-  <title>detail page</title>
-</head>
+{% block title %}Detail pagina{% endblock %}
+{% block content %}
 
-<body>
-  <main>
-
-    <div id="Filter>
-     
+    <div id="Filter">
         <table name=" select_items">
       {% for item in all_data %}
       <option value="{{ item}}">{{ item}}</option>
@@ -20,7 +14,4 @@
       </button>
       </form>
     </div>
-  </main>
-</body>
-
-</html>
+{% endblock %}

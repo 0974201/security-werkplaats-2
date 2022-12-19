@@ -49,22 +49,14 @@ user = ManageUser(DATABASE_FILE)  # for manageuser class
 
 
 @app.route("/")
-def index():
-    tables = dbm.get_table_list()
-    return render_template(
-        "tables.html", table_list=tables, database_file=DATABASE_FILE
-    )
+def home():
+    return render_template("index.html")
 
 
 # favicon
 @app.route("/favicon.ico")
 def favicon():
     return send_from_directory(os.path.join(app.root_path, "static"), "favicon.ico")
-
-
-@app.route("/home")
-def home():
-    return render_template("index.html")
 
 
 @app.route("/table")
