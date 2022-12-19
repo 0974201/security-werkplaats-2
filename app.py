@@ -189,7 +189,7 @@ def login_post():
         if check_user:
             return redirect(url_for("tables"))
         elif check_user == None:
-            flash("u done goofed", 'warning')
+            flash("Gegevens kloppen niet", 'warning')
             return render_template("INDEX.html")
     else:
         return render_template("login.html")
@@ -222,10 +222,10 @@ def adduser_post():
 
         user.add_new_user(gebruikersnaam, wachtwoord, admin)
 
-        flash("user created", 'info') #shows after successfull user creattoion
+        flash("Gebruiker aangemaakt!", 'info') #shows after successfull user creattoion
         return redirect("admin.html")
     else:
-        flash("u done goofed", 'warning')
+        flash("Er ging iets mis.", 'warning')
         return render_template("adduser.html")
 
 @app.route("/user_details/<id>") #gets id to load user from db
@@ -254,10 +254,10 @@ def edit_account_post(id):
 
         user.edit_user(gebruikersnaam, wachtwoord, admin, id)
 
-        flash("edited user", 'info')
+        flash("Gebruiker bewerkt!", 'info')
         return render_template("admin.html") 
     else:
-        flash("u done goofed", 'warning')
+        flash("Er ging iets mis.", 'warning')
         return render_template("admin.html")   
 
 @app.route("/delete_account/<id>") #gets id to load user from db
