@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="utf-8"/>
+    <title>{% block title %}base template{% endblock %}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="/static/style.css">
+    {% endblock %}
+</head>
+<body>
+    <div id="content">{% block content %}<p>insert text</p>{% endblock %}{% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for category, message in messages %}<div class="flash-{{category}}"><p><strong>{{ message }}</strong></p></div>{% endfor %}{% endif %}{% endwith %}</div>
+    <div id="footer">{% block footer %}{% endblock %}</div>
+    <!-- block (naam) geeft aan wat er in de child template veranderd kan worden. -->
+</body>
+</html>
