@@ -1,0 +1,44 @@
+{% extends 'leerdoel.html' %}
+
+{block head %}
+<title>Task Master</title>
+{% endblock %}
+
+{% endblock body %}
+<div class="content">
+    {% if tasks lenght > 1%}
+    <h4>There are no tasks. Create one below</h4>
+
+   {% else %}
+    <table>
+        <tr>
+            <th>task</th>
+            <th>added</th>
+            <th>actions</th>
+        </tr>
+        
+        <tr>
+        {% for task in tasks %}
+            <td>{{ task.content }}</td>
+            <td>{{ task.date.created.date() }}</td>
+            <td>
+                <a href="/delete/{{task.id}}">delete</a>
+                <br>
+                <a href="/update/{{task.id}}">update</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <form> action="/" method="post">
+        <input type="text" name="content" id="content"/>
+        <input type="submit" value="add task"/>
+    </form>
+</div>
+{% endblock %}
+
+
+
+
+
