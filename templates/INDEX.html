@@ -33,11 +33,16 @@
             <div class="right">
                 <div class="form">
                     <h2> login here</h2>
-                    <input type="email" name="email" placeholder="enter email here">
-                    <input type="password" name="" placeholder="enter password here">
-                    <button class="btn"><a href="#">login</a></button>
+                    <form method="POST" action="/login">
+                        <label for="gebruikersnaam">Gebruikersnaam:</label><br>
+                        <input type="text" name="gebruikersnaam" required><br/>
+                        <label for="wachtwoord">Wachtwoord:</label><br/>
+                        <input type="password" name="wachtwoord" required><br/>
+                        <input type="submit" value="Login">
+                    </form>
                 </div>
             </div>
-    <div>    
+        </div> 
+    </div>   
 </body>
 </html>

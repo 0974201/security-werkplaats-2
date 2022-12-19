@@ -4,13 +4,11 @@ import sys
 import io
 import csv
 
-from flask import Flask, render_template, make_response, request
-
-from flask import Flask, render_template, redirect, url_for, request
-
+from flask import Flask, render_template, session, redirect, url_for, make_response, request, flash, send_from_directory
 
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
+from lib.manageuser import *
 
 # This demo glues a random database and the Flask framework. If the database file does not exist,
 # a simple demo dataset will be created.
@@ -22,13 +20,16 @@ FLASK_DEBUG = True
 app = Flask(__name__)
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
 DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db")
-DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db")
+
+app.config['SECRET_KEY'] = 'dit-is-een-secret-key'
 
 # Check if the database file exists. If not, create a demo database
 if not os.path.isfile(DATABASE_FILE):
     print(f"Could not find database {DATABASE_FILE}, creating a demo database.")
     create_demo_database(DATABASE_FILE)
 dbm = DatabaseModel(DATABASE_FILE)
+
+user = ManageUser(DATABASE_FILE) #for manageuser class
 
 # Main route that shows a list of tables in the database
 # Note the "@app.route" decorator. This might be a new concept for you.
@@ -38,16 +39,24 @@ dbm = DatabaseModel(DATABASE_FILE)
 
 
 @app.route("/")
+def index():
+    return render_template("index.html")
+
+#favicon
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+
+@app.route("/home")
+def home():
+    return render_template("index.html")
+
+@app.route("/table")
 def tables():
     tables = dbm.get_table_list()
     return render_template(
         "tables.html", table_list=tables, database_file=DATABASE_FILE
     )
-
-
-@app.route("/home")
-def index():
-    return render_template("index.html")
 
 
 # The table route displays the content of a table
@@ -167,21 +176,23 @@ def min_max(table_name=None):
             num2=num2,
         )
 
-
-
-# Route for handling the login page logic
-@app.route('/login', methods=['GET', 'POST'])
+@app.route("/login") #test login template
 def login():
-    error = None
+    return render_template("login.html")
+
+@app.route("/login", methods = ['POST']) # login post, it works for now i guess??
+def login_post():
     if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
-        else:
-            return redirect(url_for('home'))
-    return render_template('login.html', error=error)
-
-
-
+        gebruikersnaam = request.form.get('gebruikersnaam')
+        wachtwoord = request.form.get('wachtwoord')
+        check_user = user.login_user(gebruikersnaam, wachtwoord) #checks if user is in db, returns none if not present
+        if check_user:
+            return redirect(url_for("tables"))
+        elif check_user == None:
+            flash("u done goofed", 'warning')
+            return render_template("INDEX.html")
+    else:
+        return render_template("login.html")
 
 
 if __name__ == "__main__":
