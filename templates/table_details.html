@@ -31,6 +31,10 @@
     {% if table_name == "vragen": %}
         <button onclick="window.location.href='/invalid_leerdoel/{{ table_name }}'">Ongeldige Leerdoelen</button>
         <button onclick="window.location.href='/html_codes/{{ table_name }}'">Html codes</button>
+        <button onclick="window.location.href= '/id/{{ table_name }}'">id</button>
+        <button onclick="window.location.href= '/leerdoel/{{ table_name }}'">leerdoel</button>
+        <button onclick="window.location.href= '/vraag/{{ table_name }}'">vraag</button>
+        <button onclick="window.location.href= '/auteur/{{ table_name }}'">auteur</button>
     {% endif %}
     <button onclick="window.location.href='/csv_export_full/{{ table_name }}'">Exporteer naar csv</button>
         {% if table_name == "vragen":%}
