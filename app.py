@@ -42,9 +42,11 @@ user = ManageUser(DATABASE_FILE) #for manageuser class
 def index():
     return render_template("index.html")
 
+
 #favicon
 @app.route('/favicon.ico')
 def favicon():
+    tables = dbm.get_table_list()
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 @app.route("/home")
@@ -266,6 +268,64 @@ def delete_account(id):
 
         flash("yeet", 'warning')
         return render_template("admin.html")
+
+#Danilo
+@app.route("/table_details/<table_name>")
+def table_content(table_name=None):
+    if not table_name:
+        return "Missing table name", 400  # HTTP 400 = Bad Request
+    else:
+        rows, column_names = dbm.get_table_content(table_name)
+        return render_template(
+            "table_details.html", rows=rows, columns=column_names, table_name=table_name
+        )
+@app.route("/id/<table_name>")
+def id_html(table_name=None):
+    if not table_name:
+        return "Missing table name", 400  # HTTP 400 = Bad Request
+    else:
+        rows, column_names = dbm.get_id_html(table_name, "id.html" , "vragen" )
+        return render_template(
+            "id.html", rows=rows, columns=column_names, table_name=table_name)
+
+
+@app.route("/leerdoel/<table_name>")
+def leerdoel_html(table_name=None):
+    if not table_name:
+        return "Missing table name", 400  # HTTP 400 = Bad Request
+    else:
+        rows, column_names = dbm.get_leerdoel_html(table_name, "leerdoel.html" , "vragen" )
+        return render_template(
+            "leerdoel.html", rows=rows, columns=column_names, table_name=table_name)
+@app.route("/vraag/<table_name>")
+def vraag_html(table_name=None):
+    if not table_name:
+        return "Missing table name", 400  # HTTP 400 = Bad Request
+    else:
+        rows, column_names = dbm.get_vraag_html(table_name, "vraag.html" , "vragen" )
+        return render_template(
+            "vraag.html", rows=rows, columns=column_names, table_name=table_name)
+
+@app.route("/auteur/<table_name>")
+def auteur_html(table_name=None):
+    if not table_name:
+        return "Missing table name", 400  # HTTP 400 = Bad Request
+    else:
+        rows, column_names = dbm.get_auteur_html(table_name, "auteur.html" , "vragen" )
+        return render_template(
+            "auteur.html", rows=rows, columns=column_names, table_name=table_name)
+# @app.route(table_content, methods= ['GET', 'POST'])
+#
+# def tabledata(columns):
+#     if request.method == "POST":
+#         col = request.form.get('column')
+#
+#     else:
+#         columns = ['vraag']
+#         columnslist = ['vraag', 'leerdoel', 'id']
+#         data = table_content(columns)
+#     return render_template("table_details.html", data = data, columns = columnslist)
+
 
 if __name__ == "__main__":
     app.run(host=FLASK_IP, port=FLASK_PORT, debug=FLASK_DEBUG)

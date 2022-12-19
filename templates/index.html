@@ -1,44 +1,48 @@
-{% extends 'leerdoel.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-{block head %}
-<title>Task Master</title>
-{% endblock %}
-
-{% endblock body %}
-<div class="content">
-    {% if tasks lenght > 1%}
-    <h4>There are no tasks. Create one below</h4>
-
-   {% else %}
-    <table>
-        <tr>
-            <th>task</th>
-            <th>added</th>
-            <th>actions</th>
-        </tr>
+    <title>Homepage Test correct</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            <div class="icon">
+                <img src="static/assets/img/testcorrect-logo.png" alt="logo">
+            </div>
+            
+            <div class="menu">
+                <ul>
+                    <li><a href="#">Oplossingen</a></li>
+                    <li><a href="#">Producten</a></li>
+                    <li><a href="#">Service</a></li>
+                    <li><a href="#">Studenten</a></li>
+                    <li><a href="#">Docenten</a></li>
+                </ul>
+            </div>
+        </div>
         
-        <tr>
-        {% for task in tasks %}
-            <td>{{ task.content }}</td>
-            <td>{{ task.date.created.date() }}</td>
-            <td>
-                <a href="/delete/{{task.id}}">delete</a>
-                <br>
-                <a href="/update/{{task.id}}">update</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
+        <div class="content">
 
-    <form> action="/" method="post">
-        <input type="text" name="content" id="content"/>
-        <input type="submit" value="add task"/>
-    </form>
-</div>
-{% endblock %}
+            <div class="left">
+                <h1>Database <br><span> Test correct</span> <br>homepage</h1>
+                <p class="par">Geef persoonlijke aandacht weer de ruimte</p>
+            </div>
 
-
-
-
-
+            <div class="right">
+                <div class="form">
+                    <h2> login here</h2>
+                    <form method="POST" action="/login">
+                        <label for="gebruikersnaam">Gebruikersnaam:</label><br>
+                        <input type="text" name="gebruikersnaam" required><br/>
+                        <label for="wachtwoord">Wachtwoord:</label><br/>
+                        <input type="password" name="wachtwoord" required><br/>
+                        <input type="submit" value="Login">
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>   
+</body>
+</html>
