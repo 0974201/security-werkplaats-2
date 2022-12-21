@@ -4,7 +4,7 @@
 {% block content %}
     <h1>HTML Codes</h1>
     <p>Hier zie je alle html codes in de colom {{columns[2]}}</p>
-    <button onclick="window.location.href='/csv_export_html/{{ table_name }}'">Exporteer naar csv</button>
+    <button type="button" class="btn btn-primary mb-3" onclick="window.location.href='/csv_export_html/{{ table_name }}'">Exporteer naar csv</button>
     <table class="table table-striped">
         <tr>
             {% for column in columns %}
