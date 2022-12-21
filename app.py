@@ -220,6 +220,7 @@ def login_post():
     if request.method == "POST":
         gebruikersnaam = request.form.get("gebruikersnaam")
         wachtwoord = request.form.get("wachtwoord")
+        
         check_user = user.login_user(
             gebruikersnaam, wachtwoord
         )  # checks if user is in db, returns none if not present
@@ -227,7 +228,7 @@ def login_post():
             return redirect(url_for("tables"))
         elif check_user == None:
             flash("Gegevens kloppen niet", "warning")
-            return redirect(url_for("login"))
+            return redirect(url_for("tables"))
     else:
         return render_template("login.html")
 
