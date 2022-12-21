@@ -227,7 +227,7 @@ def login_post():
             return redirect(url_for("tables"))
         elif check_user == None:
             flash("Gegevens kloppen niet", "warning")
-            return render_template("INDEX.html")
+            return redirect(url_for("login"))
     else:
         return render_template("login.html")
 
