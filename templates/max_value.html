@@ -4,7 +4,7 @@
 {% block content %}
     <h1>Database onderzoek</h1>
     <p>Alle rijen in de tabel <b>{{ table_name }}</b>:</p>
-    <table>
+    <table class="table table-striped">
         <thead>
         <tr>
             {% for column in columns %}

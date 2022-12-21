@@ -4,14 +4,19 @@
 {% block content %}
     <div class="container">
       <h1>Please login</h1>
-      <br>
+
       <form action="" method="post">
-        <input type="text" placeholder="Username" name="username" value="{{
-          request.form.username }}">
-         <input type="password" placeholder="Password" name="password" value="{{
-          request.form.password }}">
-        <input class="btn btn-default" type="submit" value="Login">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" name="username" aria-describedby="username" value="{{ request.form.username }}">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password" id="password" value="{{ request.form.password }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
       </form>
+
       {% if error %}
         <p class="error"><strong>Error:</strong> {{ error }}
       {% endif %}

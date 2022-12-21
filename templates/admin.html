@@ -7,7 +7,7 @@
 {% endblock %}
 {% block content %}
     <h1>Admin panel</h1>
-    <table>
+    <table class="table table-striped">
         <thead>
         <tr>
             {% for column in columns %}
@@ -21,14 +21,14 @@
             {% for field in row %}
                 <td>{{ field }}</td>
             {% endfor %}
-            <td><a href="/user_details/{{ row[0] }}"> Bewerk </a></td>
-            <td><a href="/delete_account/{{ row[0] }}"> Verwijder </a></td>
+            <td><a class="btn btn-primary" href="/user_details/{{ row[0] }}"> Bewerk </a></td>
+            <td><a class="btn btn-success" href="/delete_account/{{ row[0] }}"> Verwijder </a></td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
     <form>
-        <button formaction="{{ url_for( 'adduser') }}">Maak nieuwe gebruiker aan</button>
+        <button class="btn btn-primary" formaction="{{ url_for( 'adduser') }}">Maak nieuwe gebruiker aan</button>
     </form>
     
 {% endblock %}

@@ -7,13 +7,21 @@
 {% endblock %}
 {% block content %}
     <h1>Voeg nieuwe gebruiker toe</h1>
+
     <form method="POST" action="/adduser">
-        <label for="gebruikersnaam">Gebruikersnaam:</label><br>
-        <input type="text" name="gebruikersnaam" required><br/>
-        <label for="wachtwoord">Wachtwoord:</label><br/>
-        <input type="password" name="wachtwoord" required><br/>
-        <label for="wachtwoord">Is een admin?</label><br/>
-        <input type="checkbox" name="admin"><br/>
-        <input type="submit" value="Voeg gebruiker toe">
+        <div class="mb-3">
+          <label for="gebruikersnaam" class="form-label">Gebruikersnaam:</label>
+          <input type="text" name="gebruikersnaam" class="form-control" id="username" value="{{gebruikersnaam}}" aria-describedby="username" required>
+        </div>
+        <div class="mb-3">
+          <label for="wachtwoord" class="form-label">Wachtwoord</label>
+          <input type="password" name="wachtwoord" class="form-control" value="{{wachtwoord}}" id="Password" required>
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" name="admin" {{ "checked" if admin == 1 }} class="form-check-input" id="check">
+          <label class="form-check-label" for="check">Is een admin?</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Voeg gebruiker toe</button>
     </form>
+    
 {% endblock %}

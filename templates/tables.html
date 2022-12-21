@@ -5,10 +5,10 @@
 {% block content %}
         <h1>Database onderzoek</h1>
         <p>Alle tabellen in de database <i>{{ database_file }}</i>:</p>
-        <ul>
+        <div class="list-group">
             {% for table in table_list %}
-            <li><a href="/table_details/{{ table }}">{{ table }}</a></li>
+            <a href="/table_details/{{ table }}" class="list-group-item list-group-item-action" aria-current="true">{{ table }}</a>
             {% endfor %}
-            <li><a href="/admin">Admin paneel</a></li>
-        </ul>
+            <a href="/admin" class="list-group-item list-group-item-action" aria-current="true">Admin paneel</a>
+          </div>
 {% endblock %}
