@@ -267,7 +267,7 @@ def adduser_post():
         flash(
             "Gebruiker aangemaakt!", "info"
         )  # shows after successfull user creattoion
-        return redirect("admin.html")
+        return redirect("/admin")
     else:
         flash("Er ging iets mis.", "warning")
         return render_template("adduser.html")
@@ -317,7 +317,7 @@ def edit_account_post(id):
 def delete_account(id):
     user.delete_user(id)
 
-    flash("yeet", "warning")
+    flash("Gebruiker verwijderd", "warning")
     return render_template("admin.html")
 
 
