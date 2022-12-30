@@ -11,6 +11,8 @@ class DatabaseModel:
         if not os.path.exists(self.database_file):
             raise FileNotFoundError(f"Could not find database file: {database_file}")
 
+    #def #maak hier functie voor user login +sql quiry voor zoeken user,
+
     # Using the built-in sqlite3 system table, return a list of all tables in the database
     def get_table_list(self):
         cursor = sqlite3.connect(self.database_file).cursor()

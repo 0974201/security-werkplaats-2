@@ -16,10 +16,11 @@ from flask import (
     send_from_directory,
 )
 
+
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
 from lib.manageuser import *
-
+from markupsafe import Markup
 # This demo glues a random database and the Flask framework. If the database file does not exist,
 # a simple demo dataset will be created.
 LISTEN_ALL = "0.0.0.0"
@@ -31,7 +32,11 @@ app = Flask(__name__)
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
 DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db")
 
-app.config["SECRET_KEY"] = "dit-is-een-secret-key"
+app.secret_key = "hello"
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+
+
 
 # Check if the database file exists. If not, create a demo database
 if not os.path.isfile(DATABASE_FILE):
@@ -217,20 +222,47 @@ def login():
 
 @app.route("/login", methods=["POST"])  # login post, it works for now i guess??
 def login_post():
+
+
     if request.method == "POST":
         gebruikersnaam = request.form.get("gebruikersnaam")
         wachtwoord = request.form.get("wachtwoord")
-        
+        # hier gaan we de session aanroepen voor users
         check_user = user.login_user(
             gebruikersnaam, wachtwoord
-        )  # checks if user is in db, returns none if not present
+        )
         if check_user:
             return redirect(url_for("tables"))
-        elif check_user == None:
-            flash("Gegevens kloppen niet", "warning")
-            return redirect(url_for("tables"))
+        session["gebruikersnaam"] = user
+        return redirect(url_for("user"))
+
+    elif check_user == None:
+        flash("Gegevens kloppen niet", "warning")
+        return redirect(url_for("tables"))
+
+    
+        
+          # checks if user is in db, returns none if not present
+    
     else:
-        return render_template("login.html")
+            return render_template("login.html")
+#hier maak ik de session 
+@app.route("/user")
+def user():
+    if "user" in session:
+        user = session["user"]
+        return
+    else:
+        return redirect(url_for("login"))
+        
+@app.route("/logout")
+def logout():
+	session.pop("user", None)
+	return redirect(url_for("login"))
+
+if __name__ == "__main__":
+	app.run(debug=True)
+
 
 
 @app.route(
