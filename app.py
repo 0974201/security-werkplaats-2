@@ -124,6 +124,16 @@ def logout():
     print(session["logged_in"])
     return redirect(url_for('index'))
 
+@app.route("/edit/<id>")
+def edit(id):
+    tbl_info = dbm.get_vraag_table_content
+    print(tbl_info)
+
+    #id = tbl_info[0]
+    #vraag = tbl_info[1]
+    #id=id, vraag=vraag
+    return render_template("edit.html")
+
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")
 def table_content(table_name=None):
