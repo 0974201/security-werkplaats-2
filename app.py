@@ -1,7 +1,7 @@
 import os.path
 import sys
 
-from flask import Flask, render_template, redirect, url_for, request, flash, send_from_directory
+from flask import Flask, render_template, redirect, url_for, session, request, flash, send_from_directory
 #from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_required, current_user
 
@@ -34,8 +34,22 @@ user = ManageUser(DATABASE_FILE)
 # It is a way to "decorate" a function with additional functionality. You
 # can safely ignore this for now - or look into it as it is a really powerful
 # concept in Python.
+
+@app.before_request
+def check_login():
+    if request.endpoint not in ["login", "login_post"]:
+        if not session.get('logged_in'):
+            return redirect(url_for('login'))
+
 @app.route("/")
+def homepage():
+    return render_template("index.html")
+
+@app.route("/index")
 def index():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
     tables = dbm.get_table_list()
     return render_template(
         "tables.html", table_list=tables, database_file=DATABASE_FILE
@@ -56,7 +70,7 @@ def adduser():
 @app.route("/adduser", methods = ['POST']) #code to add values from form to db
 def adduser_post():
     if request.method == 'POST':
-        gebruikersnaam = request.form.get('gebruikersnaam') #gets username from form
+        gebruikersnaam = request.form.get('gebruikersnaam').strip() #gets username from form
         wachtwoord = request.form.get('wachtwoord')
         # gets password from form and hashes it to store in db
         #wachtwoord = generate_password_hash(request.form.get('wachtwoord'), method = 'pbkdf2:sha256', salt_length = 8)
@@ -75,6 +89,7 @@ def adduser_post():
         flash("u done goofed", 'warning')
         return render_template("adduser.html")
 
+
 @app.route("/login_success") #should show up after successful post
 #@login_required
 def login_success():
@@ -91,12 +106,23 @@ def login_post():
         wachtwoord = request.form.get('wachtwoord')
         check_user = user.login_user(gebruikersnaam, wachtwoord) #checks if user is in db, returns none if not present
         if check_user:
-            return redirect(url_for("login_success"))
+            session["logged_in"] = True
+            session["username"] = gebruikersnaam
+            print(session["logged_in"])
+            print(session["username"])
+            return redirect(url_for("index"))
         elif check_user == None:
             flash("u done goofed", 'warning')
             return render_template("login.html")
     else:
         return render_template("login.html")
+
+@app.route("/logout") #test login template
+def logout():
+    session["logged_in"] = False
+    session.pop("username")
+    print(session["logged_in"])
+    return redirect(url_for('index'))
 
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")
@@ -137,7 +163,7 @@ def account_details(id):
 def edit_account_post(id):
     if request.method == 'POST':
         
-        gebruikersnaam = request.form.get('gebruikersnaam')
+        gebruikersnaam = request.form.get('gebruikersnaam').strip()
         wachtwoord = request.form.get('wachtwoord')
         admin = request.form.get('admin')
 

@@ -26,6 +26,7 @@
             {% for field in row %}
             <td>{{ field }}</td>
             {% endfor %}
+            <td><a href="/edit/{{ row[0] }}"> Bewerk </a></td>
         </tr>
         {% endfor %}
         </tbody>
