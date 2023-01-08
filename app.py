@@ -2,8 +2,8 @@ import os.path
 import sys
 
 from flask import Flask, render_template, redirect, url_for, session, request, flash, send_from_directory
-#from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_required, current_user
+#from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
+#from flask_login import login_required, current_user
 
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
@@ -17,10 +17,11 @@ FLASK_PORT = 81
 FLASK_DEBUG = True
 
 app = Flask(__name__)
+#f_bcrypt = Bcrypt(app)
 
 app.config['SECRET_KEY'] = 'nee'
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
-DATABASE_FILE = os.path.join(app.root_path, 'databases', 'testcorrect_kopie.db')
+DATABASE_FILE = os.path.join(app.root_path, 'databases', 'testcorrect_vragen.db')
 
 # Check if the database file exists. If not, create a demo database
 if not os.path.isfile(DATABASE_FILE):
@@ -72,8 +73,8 @@ def adduser_post():
     if request.method == 'POST':
         gebruikersnaam = request.form.get('gebruikersnaam').strip() #gets username from form
         wachtwoord = request.form.get('wachtwoord')
-        # gets password from form and hashes it to store in db
-        #wachtwoord = generate_password_hash(request.form.get('wachtwoord'), method = 'pbkdf2:sha256', salt_length = 8)
+        #gets password from form and hashes it to store in db
+        #wachtwoord = f_bcrypt.generate_password_hash(request.form.get('wachtwoord'))
         admin = request.form.get('admin')
 
         if admin == "on":
@@ -146,7 +147,7 @@ def table_content(table_name=None):
         )
 
 @app.route("/admin") #copypasta from above but points specifically to the login_test table
-def admin(table_name="login_test"):
+def admin(table_name="users"):
     if not table_name:
         return "Missing table name", 400  # HTTP 400 = Bad Request
     else:

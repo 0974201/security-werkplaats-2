@@ -17,7 +17,7 @@ class ManageUser:
             cursor = connection.cursor()
         
             #SQL statement to insert new user, didn't pass along the id bc it's on auto-increment anyways.
-            new_user_qry = "INSERT INTO login_test (gebruikersnaam, wachtwoord, is_admin) VALUES (?, ?, ?)"
+            new_user_qry = "INSERT INTO users (gebruikersnaam, wachtwoord, is_admin) VALUES (?, ?, ?)"
             new_user = (username, password, admin)
         
             cursor.execute(new_user_qry, new_user)
@@ -35,7 +35,7 @@ class ManageUser:
             cursor = connection.cursor()
         
             #SQL statement to update an existing user
-            update_user_qry = "UPDATE login_test SET gebruikersnaam = ?, wachtwoord = ?, is_admin = ? WHERE user_id = ?"
+            update_user_qry = "UPDATE users SET gebruikersnaam = ?, wachtwoord = ?, is_admin = ? WHERE user_id = ?"
             edit_user = (username, password, admin, id)
 
             cursor.execute(update_user_qry, edit_user)
@@ -53,7 +53,7 @@ class ManageUser:
             cursor = connection.cursor()
         
             #SQL statement to check if user is present in db
-            check_user_qry = "SELECT * FROM login_test WHERE gebruikersnaam = ? AND wachtwoord = ?"
+            check_user_qry = "SELECT * FROM users WHERE gebruikersnaam = ? AND wachtwoord = ?"
             login_user = (username, password)
             print(login_user)
 
@@ -75,7 +75,7 @@ class ManageUser:
             cursor = connection.cursor()
         
             #SQL statement to get user from table
-            get_user_qry = "SELECT * FROM login_test WHERE user_id = ?"
+            get_user_qry = "SELECT * FROM users WHERE user_id = ?"
             user_id = (id)
             print(user_id)
 
@@ -96,11 +96,11 @@ class ManageUser:
             cursor = connection.cursor()
         
             #SQL statement to delete an existing user
-            delete_user_qry = "DELETE FROM login_test WHERE user_id = ?"
+            delete_user_qry = "DELETE FROM users WHERE user_id = ?"
             delete_user = (id)
 
             #need to reset sqlite_sequence table bc user_id = autoincrement
-            reset_seq_qry = "UPDATE 'sqlite_sequence' SET 'seq' = (SELECT MAX('user_id') FROM 'login_test') WHERE 'name' = 'login_test'"
+            reset_seq_qry = "UPDATE 'sqlite_sequence' SET 'seq' = (SELECT MAX('user_id') FROM 'users') WHERE 'name' = 'users'"
             
             cursor.execute(delete_user_qry, delete_user)
             connection.commit()
