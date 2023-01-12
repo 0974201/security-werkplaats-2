@@ -55,7 +55,6 @@ class ManageUser:
             #SQL statement to check if user is present in db
             check_user_qry = "SELECT * FROM users WHERE gebruikersnaam = ? AND wachtwoord = ?"
             login_user = (username, password)
-            print(login_user)
 
             cursor.execute(check_user_qry, login_user)
             user = cursor.fetchone() #fetchall geeft alle matchende rows terug, fetchone alleen één row of none als t er niet is. 
@@ -76,7 +75,6 @@ class ManageUser:
         
             #SQL statement to get user from table
             get_user_qry = "SELECT * FROM users WHERE user_id = ?"
-            print(id)
 
             cursor.execute(get_user_qry, [id]) #ik weet niet waarom hij zonder de brackets brak maar oké, sure
             user = cursor.fetchone() 

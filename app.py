@@ -175,10 +175,6 @@ def account_details(id):
 def edit_account_post(id):
     if request.method == 'POST':
         
-        print(id)
-        id_test = id
-        print(id_test)
-
         gebruikersnaam = request.form.get('gebruikersnaam').strip()
         wachtwoord = request.form.get('wachtwoord')
         admin = request.form.get('admin')
@@ -188,7 +184,7 @@ def edit_account_post(id):
         else:
             admin = 0
 
-        user.edit_user(gebruikersnaam, wachtwoord, admin, id_test)
+        user.edit_user(gebruikersnaam, wachtwoord, admin, id)
 
         flash("edited user", 'info')
         return redirect(url_for('admin'))
