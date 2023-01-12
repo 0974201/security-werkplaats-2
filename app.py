@@ -1,6 +1,4 @@
 import os.path
-import sys
-
 import io
 import csv
 
@@ -39,6 +37,7 @@ DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db"
 if not os.path.isfile(DATABASE_FILE):
     print(f"Could not find database {DATABASE_FILE}, creating a demo database.")
     create_demo_database(DATABASE_FILE)
+
 dbm = DatabaseModel(DATABASE_FILE)
 user = ManageUser(DATABASE_FILE)
 
@@ -54,20 +53,14 @@ def check_login():
         if not session.get('logged_in', 'username'):
             return redirect(url_for('login'))
 
-@app.route("/")
-def homepage():
-    return render_template("index.html")
-
-@app.route("/index")
-def home():
-    return render_template("index.html")
-
-
 # favicon
 @app.route("/favicon.ico")
 def favicon():
     return send_from_directory(os.path.join(app.root_path, "static"), "favicon.ico")
 
+@app.route("/")
+def homepage():
+    return render_template("index.html")
 
 @app.route("/table")
 def tables():
@@ -80,10 +73,6 @@ def tables():
     return render_template(
         "tables.html", table_list=tables, database_file=DATABASE_FILE, username = username
     )
-
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 @app.route("/base") #base template
 def base():
@@ -269,32 +258,11 @@ def min_max(table_name=None):
         )
 
 
-@app.route("/login")  # test login template
-def login():
-    return render_template("login.html")
-
-
-@app.route("/login", methods=["POST"])  # login post, it works for now i guess??
-def login_post():
-    if request.method == "POST":
-        gebruikersnaam = request.form.get("gebruikersnaam")
-        wachtwoord = request.form.get("wachtwoord")
-        check_user = user.login_user(
-            gebruikersnaam, wachtwoord
-        )  # checks if user is in db, returns none if not present
-        if check_user:
-            return redirect(url_for("tables"))
-        elif check_user == None:
-            flash("Gegevens kloppen niet", "warning")
-            return redirect(url_for("login"))
-    else:
-        return render_template("login.html")
-
-
-@app.route(
-    "/admin"
-)  # copypasta from table display but points specifically to the user table
+@app.route("/admin") #copypasta from above but points specifically to the login_test table
 def admin(table_name="users"):
+    if session.get('username') != "admin":
+        return redirect(url_for('index'))
+
     if not table_name:
         return "Missing table name", 400  # HTTP 400 = Bad Request
     else:
@@ -303,18 +271,20 @@ def admin(table_name="users"):
             "admin.html", rows=rows, columns=column_names, table_name=table_name
         )
 
-
-@app.route("/adduser")  # test add user template
+@app.route("/adduser") #test add user template
 def adduser():
+    if session.get('username') != "admin":
+        return redirect(url_for('index'))
     return render_template("adduser.html")
 
-
-@app.route("/adduser", methods=["POST"])  # code to add values from form to db
+@app.route("/adduser", methods = ['POST']) #code to add values from form to db
 def adduser_post():
-    if request.method == "POST":
-        gebruikersnaam = request.form.get("gebruikersnaam")  # gets username from form
-        wachtwoord = request.form.get("wachtwoord")
-        admin = request.form.get("admin")
+    if request.method == 'POST':
+        gebruikersnaam = request.form.get('gebruikersnaam').strip() #gets username from form
+        wachtwoord = request.form.get('wachtwoord')
+        #gets password from form and hashes it to store in db
+        #wachtwoord = f_bcrypt.generate_password_hash(request.form.get('wachtwoord'))
+        admin = request.form.get('admin')
 
         if admin == "on":
             admin = 1
@@ -323,40 +293,36 @@ def adduser_post():
 
         user.add_new_user(gebruikersnaam, wachtwoord, admin)
 
-        flash(
-            "Gebruiker aangemaakt!", "info"
-        )  # shows after successfull user creattoion
-        return redirect("/admin")
+        flash("Gebruiker aangemaakt!", "info") #shows after successfull user creattoion
+        return redirect(url_for('admin'))
     else:
         flash("Er ging iets mis.", "warning")
-        return render_template("adduser.html")
+        return redirect(url_for('admin'))
 
+@app.route("/account_details/<id>") #gets id to load user from db
+def account_details(id):
+    if session.get('username') != "admin":
+        return redirect(url_for('index'))
 
-@app.route("/user_details/<id>")  # gets id to load user from db
-def user_details(id):
     user_info = user.get_user(id)
+    #print(user_info)
 
     id = user_info[0]
     gebruikersnaam = user_info[1]
     wachtwoord = user_info[2]
     admin = user_info[3]
 
-    return render_template(
-        "user_details.html",
-        id=id,
-        gebruikersnaam=gebruikersnaam,
-        wachtwoord=wachtwoord,
-        admin=admin,
-    )
+    #print(f"{id}, {gebruikersnaam}, {wachtwoord}, {admin}")
 
+    return render_template("account_details.html", id = id, gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
 
-@app.route("/editaccount/<id>", methods=["GET", "POST"])  # gets id to load user from db
+@app.route("/editaccount/<id>", methods = ['GET', 'POST']) #gets id to load user from db
 def edit_account_post(id):
-    if request.method == "POST":
-
-        gebruikersnaam = request.form.get("gebruikersnaam")
-        wachtwoord = request.form.get("wachtwoord")
-        admin = request.form.get("admin")
+    if request.method == 'POST':
+        
+        gebruikersnaam = request.form.get('gebruikersnaam').strip()
+        wachtwoord = request.form.get('wachtwoord')
+        admin = request.form.get('admin')
 
         if admin == "on":
             admin = 1
@@ -366,18 +332,25 @@ def edit_account_post(id):
         user.edit_user(gebruikersnaam, wachtwoord, admin, id)
 
         flash("Gebruiker bewerkt!", "info")
-        return render_template("admin.html")
+        return redirect(url_for('admin'))
     else:
         flash("Er ging iets mis.", "warning")
-        return render_template("admin.html")
+        return redirect(url_for('admin'))   
 
-
-@app.route("/delete_account/<id>")  # gets id to load user from db
+@app.route("/delete_account/<id>") #gets id to load user from db
 def delete_account(id):
+    if session.get('username') != "admin":
+        return redirect(url_for('index'))
+
+    print(id)
     user.delete_user(id)
 
     flash("Gebruiker verwijderd", "warning")
-    return render_template("admin.html")
+    return redirect(url_for('admin'))        
+
+@app.route("/teapot") #test
+def test():
+    return render_template("test.html"), 418
 
 
 @app.route("/id/<table_name>")
@@ -424,101 +397,6 @@ def auteur_html(table_name=None):
         return render_template(
             "auteur.html", rows=rows, columns=column_names, table_name=table_name
         )
-
-@app.route("/admin") #copypasta from above but points specifically to the login_test table
-def admin(table_name="users"):
-    if session.get('username') != "admin":
-        return redirect(url_for('index'))
-
-    if not table_name:
-        return "Missing table name", 400  # HTTP 400 = Bad Request
-    else:
-        rows, column_names = dbm.get_admin_table_content(table_name)
-        return render_template(
-            "admin.html", rows=rows, columns=column_names, table_name=table_name
-        )
-
-@app.route("/adduser") #test add user template
-def adduser():
-    if session.get('username') != "admin":
-        return redirect(url_for('index'))
-    return render_template("adduser.html")
-
-@app.route("/adduser", methods = ['POST']) #code to add values from form to db
-def adduser_post():
-    if request.method == 'POST':
-        gebruikersnaam = request.form.get('gebruikersnaam').strip() #gets username from form
-        wachtwoord = request.form.get('wachtwoord')
-        #gets password from form and hashes it to store in db
-        #wachtwoord = f_bcrypt.generate_password_hash(request.form.get('wachtwoord'))
-        admin = request.form.get('admin')
-
-        if admin == "on":
-            admin = 1
-        else:
-            admin = 0
-
-        user.add_new_user(gebruikersnaam, wachtwoord, admin)
-
-        flash("user created", 'info') #shows after successfull user creattoion
-        return redirect(url_for('admin'))
-    else:
-        flash("u done goofed", 'warning')
-        return redirect(url_for('admin'))
-
-@app.route("/account_details/<id>") #gets id to load user from db
-def account_details(id):
-    if session.get('username') != "admin":
-        return redirect(url_for('index'))
-
-    user_info = user.get_user(id)
-    #print(user_info)
-
-    id = user_info[0]
-    gebruikersnaam = user_info[1]
-    wachtwoord = user_info[2]
-    admin = user_info[3]
-
-    #print(f"{id}, {gebruikersnaam}, {wachtwoord}, {admin}")
-
-    return render_template("account_details.html", id = id, gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
-
-@app.route("/editaccount/<id>", methods = ['GET', 'POST']) #gets id to load user from db
-def edit_account_post(id):
-    if request.method == 'POST':
-        
-        gebruikersnaam = request.form.get('gebruikersnaam').strip()
-        wachtwoord = request.form.get('wachtwoord')
-        admin = request.form.get('admin')
-
-        if admin == "on":
-            admin = 1
-        else:
-            admin = 0
-
-        user.edit_user(gebruikersnaam, wachtwoord, admin, id)
-
-        flash("edited user", 'info')
-        return redirect(url_for('admin'))
-    else:
-        flash("u done goofed", 'warning')
-        return redirect(url_for('admin'))   
-
-@app.route("/delete_account/<id>") #gets id to load user from db
-def delete_account(id):
-    if session.get('username') != "admin":
-        return redirect(url_for('index'))
-
-    print(id)
-    user.delete_user(id)
-
-    flash("yeet", 'warning')
-    return redirect(url_for('admin'))        
-
-
-@app.route("/teapot") #test
-def test():
-    return render_template("test.html"), 418       
 
 if __name__ == "__main__":
     app.run(host=FLASK_IP, port=FLASK_PORT, debug=FLASK_DEBUG)

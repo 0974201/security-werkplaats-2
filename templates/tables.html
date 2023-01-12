@@ -6,10 +6,11 @@
         <h1>Database onderzoek</h1>
         <p>Alle tabellen in de database <i>{{ database_file }}</i>:</p>
         <div class="list-group">
-            {% if username == "admin" %}<a href="/admin" class="list-group-item list-group-item-action" aria-current="true">admin panel</a>{% endif %}
-            <li><a href= "/logout">logout</a></li>
+            {% if username == "admin" %}
+                <a href="/admin" class="list-group-item list-group-item-action" aria-current="true">admin panel</a>
+            {% endif %}
             {% for table in table_list %}
-            <a href="/table_details/{{ table }}" class="list-group-item list-group-item-action" aria-current="true">{{ table }}</a>
+                <a href="/table_details/{{ table }}" class="list-group-item list-group-item-action" aria-current="true">{{ table }}</a>
             {% endfor %}
             <a href="/logout" class="list-group-item list-group-item-action" aria-current="true">logout</a>
           </div>
