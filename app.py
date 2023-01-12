@@ -85,10 +85,10 @@ def adduser_post():
         user.add_new_user(gebruikersnaam, wachtwoord, admin)
 
         flash("user created", 'info') #shows after successfull user creattoion
-        return render_template("adduser.html")
+        return redirect(url_for('admin'))
     else:
         flash("u done goofed", 'warning')
-        return render_template("adduser.html")
+        return redirect(url_for('admin'))
 
 
 @app.route("/login_success") #should show up after successful post
@@ -159,21 +159,25 @@ def admin(table_name="users"):
 @app.route("/account_details/<id>") #gets id to load user from db
 def account_details(id):
         user_info = user.get_user(id)
-        #print(user_info)
+        print(user_info)
 
         id = user_info[0]
         gebruikersnaam = user_info[1]
         wachtwoord = user_info[2]
         admin = user_info[3]
 
-        #print(f"{id}, {gebruikersnaam}, {wachtwoord}, {admin}")
+        print(f"{id}, {gebruikersnaam}, {wachtwoord}, {admin}")
 
-        return render_template("account_details.html",id = id, gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
+        return render_template("account_details.html", id = id, gebruikersnaam = gebruikersnaam, wachtwoord = wachtwoord, admin = admin)
 
 @app.route("/editaccount/<id>", methods = ['GET', 'POST']) #gets id to load user from db
 def edit_account_post(id):
     if request.method == 'POST':
         
+        print(id)
+        id_test = id
+        print(id_test)
+
         gebruikersnaam = request.form.get('gebruikersnaam').strip()
         wachtwoord = request.form.get('wachtwoord')
         admin = request.form.get('admin')
@@ -183,20 +187,21 @@ def edit_account_post(id):
         else:
             admin = 0
 
-        user.edit_user(gebruikersnaam, wachtwoord, admin, id)
+        user.edit_user(gebruikersnaam, wachtwoord, admin, id_test)
 
         flash("edited user", 'info')
-        return render_template("admin.html") 
+        return redirect(url_for('admin'))
     else:
         flash("u done goofed", 'warning')
-        return render_template("admin.html")   
+        return redirect(url_for('admin'))   
 
 @app.route("/delete_account/<id>") #gets id to load user from db
 def delete_account(id):
+        print(id)
         user.delete_user(id)
 
         flash("yeet", 'warning')
-        return render_template("admin.html")        
+        return redirect(url_for('admin'))        
 
 
 @app.route("/teapot") #test
