@@ -123,3 +123,24 @@ class DatabaseModel:
 
         # Note that this method returns 2 variables!
         return table_content, table_headers
+
+
+    # Modified from above
+    def get_admin_table_content(self, table_name):
+        cursor = sqlite3.connect(self.database_file).cursor()
+        cursor.execute(f"SELECT user_id, gebruikersnaam FROM {table_name}")
+        
+        table_headers = [column_name[0] for column_name in cursor.description]
+        table_content = cursor.fetchall()
+
+        return table_content, table_headers
+
+
+    # Modified from above
+    def get_vraag_table_content(self, table_name):
+        cursor = sqlite3.connect(self.database_file).cursor()
+        cursor.execute(f"SELECT vraag_id, vraag FROM {table_name}")
+        
+        table_content = cursor.fetchall()
+
+        return table_content

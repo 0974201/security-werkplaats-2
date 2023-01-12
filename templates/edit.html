@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Gebruiker gegevens{% endblock %}
+{% block head %}
+    {{super()}}
+    <link rel="stylesheet" href="/static/basic.css" type="text/css">
+{% endblock %}
+{% block content %}
+    <h1>Gegevens van {{gebruikersnaam}}</h1>
+
+    <form method="POST" action="/edit/{{id}}">
+        <label for="vraag">Vraag:</label><br/>
+        <input type="text" name="vraag" value="{{vraag}}" readonly><br/>
+        <input type="submit" value="Bewerk">
+    </form>
+{% endblock %}

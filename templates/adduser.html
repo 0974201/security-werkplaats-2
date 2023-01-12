@@ -15,7 +15,7 @@
         </div>
         <div class="mb-3">
           <label for="wachtwoord" class="form-label">Wachtwoord</label>
-          <input type="password" name="wachtwoord" class="form-control" value="{{wachtwoord}}" id="Password" required>
+          <input type="password" name="wachtwoord" class="form-control" id="password" value="{{wachtwoord}}" aria-describedby="password" required>
         </div>
         <div class="mb-3 form-check">
           <input type="checkbox" name="admin" {{ "checked" if admin == 1 }} class="form-check-input" id="check">

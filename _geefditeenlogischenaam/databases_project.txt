@@ -1,0 +1,43 @@
+Step 1:
+
+Patient:
+# patient_id : int
+- name : varchar
+- address : varchar
+- phone : int
+- email : varchar
+- insurance_id : int
+- insurance_company : varchar
+
+Doctor:
+# doc_id
+- name : varchar
+- address : varchar
+- phone : int
+- specialty : varchar
+- affiliated_hospital : varchar
+
+Hostpital:
+# hospital_id
+- name : varchar
+- address : varchar
+- phone : int
+
+
+Prescription:
+# prescription_id
+- name : varchar
+- purpose : varchar
+- side_effects: varchar
+- date : date
+- refillable : boolean (?)
+- dosage : int
+- duration: int
+
+
+Step 2:
+
+Visit = supertype
+new issue = subtype
+follow-up = subtype
+routine checkup = subtype
