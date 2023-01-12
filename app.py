@@ -38,7 +38,7 @@ user = ManageUser(DATABASE_FILE)
 @app.before_request
 def check_login():
     if request.endpoint not in ["login", "login_post"]:
-        if not session.get('logged_in'):
+        if not session.get('logged_in', 'username'):
             return redirect(url_for('login'))
 
 @app.route("/")
@@ -49,10 +49,12 @@ def homepage():
 def index():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
+
+    username = session.get('username')
     
     tables = dbm.get_table_list()
     return render_template(
-        "tables.html", table_list=tables, database_file=DATABASE_FILE
+        "tables.html", table_list=tables, database_file=DATABASE_FILE, username = username
     )
 
 @app.route('/favicon.ico')
@@ -81,7 +83,7 @@ def login_post():
             return redirect(url_for("index"))
         elif check_user == None:
             flash("u done goofed", 'warning')
-            return render_template("login.html")
+            return redirect(url_for("login"))
     else:
         return render_template("login.html")
 
