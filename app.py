@@ -78,8 +78,6 @@ def login_post():
         if check_user:
             session["logged_in"] = True
             session["username"] = gebruikersnaam
-            print(session["logged_in"])
-            print(session["username"])
             return redirect(url_for("index"))
         elif check_user == None:
             flash("u done goofed", 'warning')

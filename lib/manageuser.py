@@ -58,7 +58,6 @@ class ManageUser:
 
             cursor.execute(check_user_qry, login_user)
             user = cursor.fetchone() #fetchall geeft alle matchende rows terug, fetchone alleen één row of none als t er niet is. 
-            print(user)
             connection.commit()
 
             connection.close()
