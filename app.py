@@ -107,6 +107,7 @@ def logout():
     session["logged_in"] = False
     session.pop("username")
     print(session["logged_in"])
+    flash("U bent uitgelogd!", "info")
     return redirect(url_for('home'))
 
 @app.route("/edit/<id>")
