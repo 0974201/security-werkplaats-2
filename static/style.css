@@ -23,6 +23,12 @@ h1 {
     font-size: medium;
 }
 
+.flash-info {
+    background-color: #00ffaa;
+    color: rgb(36, 36, 36);
+    border-left: 6px solid #00ca87;
+}
+
 .flash-warning {
     background-color: #e5ff00;
     color: rgb(30, 238, 169);

@@ -49,9 +49,9 @@ user = ManageUser(DATABASE_FILE)
 
 @app.before_request
 def check_login():
-    if request.endpoint not in ["login", "login_post"]:
+    if request.endpoint not in ["/", "home", "login", "login_post"]:
         if not session.get('logged_in', 'username'):
-            return redirect(url_for('login'))
+            return redirect(url_for('home'))
 
 # favicon
 @app.route("/favicon.ico")
@@ -60,6 +60,10 @@ def favicon():
 
 @app.route("/")
 def homepage():
+    return render_template("index.html")
+
+@app.route("/home")
+def home():
     return render_template("index.html")
 
 @app.route("/table")
@@ -91,9 +95,9 @@ def login_post():
         if check_user:
             session["logged_in"] = True
             session["username"] = gebruikersnaam
-            return redirect(url_for("index"))
+            return redirect(url_for("tables"))
         elif check_user == None:
-            flash("u done goofed", 'warning')
+            flash("Gegevens kloppen niet!", "warning")
             return redirect(url_for("login"))
     else:
         return render_template("login.html")
@@ -103,7 +107,7 @@ def logout():
     session["logged_in"] = False
     session.pop("username")
     print(session["logged_in"])
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 @app.route("/edit/<id>")
 def edit(id):
