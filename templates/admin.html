@@ -21,7 +21,7 @@
             {% for field in row %}
                 <td>{{ field }}</td>
             {% endfor %}
-            <td><a class="btn btn-primary" href="/user_details/{{ row[0] }}"> Bewerk </a></td>
+            <td><a class="btn btn-primary" href="/account_details/{{ row[0] }}"> Bewerk </a></td>
             <td><a class="btn btn-success" href="/delete_account/{{ row[0] }}"> Verwijder </a></td>
         </tr>
         {% endfor %}
@@ -30,5 +30,4 @@
     <form>
         <button class="btn btn-primary" formaction="{{ url_for( 'adduser') }}">Maak nieuwe gebruiker aan</button>
     </form>
-    
 {% endblock %}
