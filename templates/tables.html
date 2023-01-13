@@ -9,7 +9,7 @@
             {% if username == "admin" %}
                 <a href="/admin" class="list-group-item list-group-item-action" aria-current="true">admin panel</a>
             {% endif %}
-            {% for table in table_list %}
+            {% for table in table_list[0:3] %}
                 <a href="/table_details/{{ table }}" class="list-group-item list-group-item-action" aria-current="true">{{ table }}</a>
             {% endfor %}
           </div>
