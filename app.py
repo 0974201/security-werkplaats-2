@@ -18,6 +18,7 @@ from flask import (
 from lib.tablemodel import DatabaseModel
 from lib.demodatabase import create_demo_database
 from lib.manageuser import *
+from lib.edittable import *
 
 # This demo glues a random database and the Flask framework. If the database file does not exist,
 # a simple demo dataset will be created.
@@ -40,6 +41,7 @@ if not os.path.isfile(DATABASE_FILE):
 
 dbm = DatabaseModel(DATABASE_FILE)
 user = ManageUser(DATABASE_FILE)
+editbl = EditTable(DATABASE_FILE)
 
 # Main route that shows a list of tables in the database
 # Note the "@app.route" decorator. This might be a new concept for you.
@@ -112,13 +114,14 @@ def logout():
 
 @app.route("/edit/<id>")
 def edit(id):
-    tbl_info = dbm.get_vraag_table_content
-    print(tbl_info)
+    get_vraag = editbl.vraag(id)
+    print(get_vraag)
 
     #id = tbl_info[0]
-    #vraag = tbl_info[1]
-    #id=id, vraag=vraag
-    return render_template("edit.html")
+    #leerdoel = get_vraag[1]
+    vraag = get_vraag[2]
+    #auteur = get_vraag[3]
+    return render_template("edit.html", vraag = vraag)
 
 # The table route displays the content of a table
 @app.route("/table_details/<table_name>")
@@ -382,16 +385,29 @@ def leerdoel_html(table_name=None):
         )
 
 
-@app.route("/vraag/<table_name>")
-def vraag_html(table_name=None):
-    if not table_name:
-        return "Missing table name", 400  # HTTP 400 = Bad Request
-    else:
-        rows, column_names = dbm.get_vraag_html(table_name, "vraag.html", "vragen")
-        return render_template(
-            "vraag.html", rows=rows, columns=column_names, table_name=table_name
-        )
+@app.route("/vraag/<id>")
+def vraag(id):
+    get_vraag = editbl.vraag(id)
+    print(get_vraag)
 
+    id = get_vraag[0]
+    leerdoel = get_vraag[1]
+    vraag = get_vraag[2]
+    auteur = get_vraag[3]
+    return render_template("vraag.html", id = id, leerdoel = leerdoel, vraag = vraag, auteur = auteur)
+
+@app.route("/edit_vraag/<id>", methods = ['GET', 'POST'] )
+def edit_vraag(id):
+    if request.method == 'POST':
+        
+        leerdoel = request.form.get('leerdoel')
+        vraag = request.form.get('vraag')
+        auteur = request.form.get('auteur')
+
+        editbl.edit_vraag(leerdoel, vraag, auteur, id)
+
+        flash(f"vraag {id} bewerkt.", "info")
+        return redirect(url_for('home'))
 
 @app.route("/auteur/<table_name>")
 def auteur_html(table_name=None):

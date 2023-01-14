@@ -134,13 +134,3 @@ class DatabaseModel:
         table_content = cursor.fetchall()
 
         return table_content, table_headers
-
-
-    # Modified from above
-    def get_vraag_table_content(self, table_name):
-        cursor = sqlite3.connect(self.database_file).cursor()
-        cursor.execute(f"SELECT vraag_id, vraag FROM {table_name}")
-        
-        table_content = cursor.fetchall()
-
-        return table_content
