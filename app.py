@@ -372,8 +372,8 @@ def id_html(table_name=None):
         )
 
 
-@app.route("/leerdoel/<table_name>")
-def leerdoel_html(table_name=None):
+@app.route("/leerdoel")
+def leerdoel_html(table_name="leerdoelen"):
     if not table_name:
         return "Missing table name", 400  # HTTP 400 = Bad Request
     else:
@@ -384,6 +384,17 @@ def leerdoel_html(table_name=None):
             "leerdoel.html", rows=rows, columns=column_names, table_name=table_name
         )
 
+@app.route("/vragen")
+def vraag_html(table_name="vragen"):
+    if not table_name:
+        return "Missing table name", 400  # HTTP 400 = Bad Request
+    else:
+        rows, column_names = dbm.get_vraag_html(
+            table_name, "vragen.html", "vragen"
+        )
+        return render_template(
+            "vragen.html", rows=rows, columns=column_names, table_name=table_name
+        )
 
 @app.route("/vraag/<id>")
 def vraag(id):
@@ -394,7 +405,7 @@ def vraag(id):
     leerdoel = get_vraag[1]
     vraag = get_vraag[2]
     auteur = get_vraag[3]
-    
+
     return render_template("vraag.html", id = id, leerdoel = leerdoel, vraag = vraag, auteur = auteur)
 
 @app.route("/edit_vraag/<id>", methods = ['GET', 'POST'] )
@@ -410,8 +421,8 @@ def edit_vraag(id):
         flash(f"vraag {id} bewerkt.", "info")
         return redirect(url_for('home'))
 
-@app.route("/auteur/<table_name>")
-def auteur_html(table_name=None):
+@app.route("/auteur")
+def auteur_html(table_name="auteurs"):
     if not table_name:
         return "Missing table name", 400  # HTTP 400 = Bad Request
     else:

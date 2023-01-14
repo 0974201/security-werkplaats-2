@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Auteur tabel{% endblock %}
+{% block title %}{{ table_name }} tabel{% endblock %}
 {% block content %}
     <h1>Database onderzoek</h1>
-    <p>auteur <b>{{ table_name }} column</b>:</p>
+    <p><b>{{ table_name }} column</b>:</p>
 
     <table class="table table-striped">
       <thead>
