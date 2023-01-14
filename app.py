@@ -394,6 +394,7 @@ def vraag(id):
     leerdoel = get_vraag[1]
     vraag = get_vraag[2]
     auteur = get_vraag[3]
+    
     return render_template("vraag.html", id = id, leerdoel = leerdoel, vraag = vraag, auteur = auteur)
 
 @app.route("/edit_vraag/<id>", methods = ['GET', 'POST'] )
