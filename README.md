@@ -1,4 +1,11 @@
 # werkplaats2_starter
+
+admin login gegevens: admin / admin
+niet admin login: test / test
+
+trello: https://trello.com/b/CmTmYmOB/test-correct-site
+
+
 Starter repository voor Werkplaats 2. Deze repository bevat een Flask applicatie met een aantal van de componenten die we ook nodig hebben om de werkplaats opdracht uit te voeren: 
 - Een database
 - Templates
