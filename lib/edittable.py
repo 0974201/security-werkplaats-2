@@ -54,8 +54,6 @@ class EditTable:
             cursor.execute("SELECT * FROM auteurs WHERE id = ?", [id])
             auteur = cursor.fetchone()
 
-            print(auteur)
-
             connection.close()
 
         except OperationalError as e:
@@ -90,8 +88,6 @@ class EditTable:
             update_medewerker_qry = "UPDATE auteurs SET voornaam = ?, achternaam = ?, geboortejaar = ?, medewerker = ?, met_pensioen = ? WHERE id = ?"
             edit_medewerker = (voornaam, achternaam, geboortejaar, medewerker, met_pensioen, id)
 
-            print(edit_medewerker)
-            
             cursor.execute(update_medewerker_qry, edit_medewerker)
             connection.commit()
 

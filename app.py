@@ -460,7 +460,7 @@ def edit_medewerker_post(id):
         flash(f"vraag {id} bewerkt.", "info")
         return redirect(url_for('auteur'))
 
-@app.route("/edit_leerdoel/<id>", methods = ['GET', 'POST'] )
+@app.route("/edit_leerdoel/<id>")
 def edit_leerdoel(id):
     get_leerdoel = editbl.leerdoel(id)
     print(get_leerdoel)
