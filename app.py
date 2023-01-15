@@ -458,7 +458,7 @@ def edit_medewerker_post(id):
         editbl.edit_medewerker(voornaam, achternaam, geboortejaar, medewerker, met_pensioen, id)
 
         flash(f"vraag {id} bewerkt.", "info")
-        return redirect(url_for('auteur'))
+        return redirect(url_for('auteur_html'))
 
 @app.route("/edit_leerdoel/<id>")
 def edit_leerdoel(id):
@@ -479,14 +479,14 @@ def edit_leerdoel_post(id):
         editbl.edit_leerdoel(leerdoel, id)
 
         flash(f"leerdoel {id} bewerkt.", "info")
-        return redirect(url_for('leerdoel'))
+        return redirect(url_for('leerdoel_html'))
 
 @app.route("/auteur")
 def auteur_html(table_name="auteurs"):
     if not table_name:
         return "Missing table name", 400  # HTTP 400 = Bad Request
     else:
-        rows, column_names = dbm.get_auteur_html(table_name, "auteur.html", "vragen")
+        rows, column_names = dbm.get_auteur_html(table_name, "auteur.html", "auteurs")
         return render_template(
             "auteur.html", rows=rows, columns=column_names, table_name=table_name
         )
