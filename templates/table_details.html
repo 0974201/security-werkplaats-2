@@ -45,6 +45,11 @@
                     {% for field in row %}
                     <td>{{ field }}</td>
                     {% endfor %}
+                    {% if table_name == "vragen" %}
+                        <td><a class="btn btn-primary" href="/vraag/{{ row[0] }}"> Bewerk </a></td>
+                    {% else %}
+                    <td><a class="btn btn-primary" href="/edit/{{ row[0] }}"> Bewerk </a></td>
+                    {% endif %}   
                 </tr>
                 {% endfor %}
             </tbody>

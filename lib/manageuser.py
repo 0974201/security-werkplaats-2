@@ -55,11 +55,9 @@ class ManageUser:
             #SQL statement to check if user is present in db
             check_user_qry = "SELECT * FROM users WHERE gebruikersnaam = ? AND wachtwoord = ?"
             login_user = (username, password)
-            print(login_user)
 
             cursor.execute(check_user_qry, login_user)
             user = cursor.fetchone() #fetchall geeft alle matchende rows terug, fetchone alleen één row of none als t er niet is. 
-            print(user)
             connection.commit()
 
             connection.close()
@@ -76,10 +74,8 @@ class ManageUser:
         
             #SQL statement to get user from table
             get_user_qry = "SELECT * FROM users WHERE user_id = ?"
-            user_id = (id)
-            print(user_id)
 
-            cursor.execute(get_user_qry, user_id)
+            cursor.execute(get_user_qry, [id]) #ik weet niet waarom hij zonder de brackets brak maar oké, sure
             user = cursor.fetchone() 
             connection.commit()
 
@@ -88,7 +84,7 @@ class ManageUser:
         except OperationalError as e:
             print(f"Error opening database file {self.database_file}")
             raise e 
-        return user    
+        return user
     
     def delete_user(self, id):
         try:
@@ -97,12 +93,11 @@ class ManageUser:
         
             #SQL statement to delete an existing user
             delete_user_qry = "DELETE FROM users WHERE user_id = ?"
-            delete_user = (id)
 
             #need to reset sqlite_sequence table bc user_id = autoincrement
             reset_seq_qry = "UPDATE 'sqlite_sequence' SET 'seq' = (SELECT MAX('user_id') FROM 'users') WHERE 'name' = 'users'"
             
-            cursor.execute(delete_user_qry, delete_user)
+            cursor.execute(delete_user_qry, [id])
             connection.commit()
 
             cursor.execute(reset_seq_qry)
@@ -113,3 +108,4 @@ class ManageUser:
         except OperationalError as e:
             print(f"Error opening database file {self.database_file}")
             raise e
+        

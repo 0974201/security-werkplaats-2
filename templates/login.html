@@ -1,24 +1,18 @@
 {% extends "base.html" %}
 
 {% block title %}Login{% endblock %}
+{% block head %}
+    {{super()}}
+    <link rel="stylesheet" href="/static/basic.css" type="text/css">
+{% endblock %}
 {% block content %}
-    <div class="container">
-      <h1>Please login</h1>
+    <h1>Login Here</h1>
 
-      <form action="" method="post">
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" class="form-control" id="username" name="username" aria-describedby="username" value="{{ request.form.username }}">
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" name="password" id="password" value="{{ request.form.password }}">
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-      </form>
-
-      {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}
-      {% endif %}
-    </div>
+    <form method="POST" action="/login">
+        <label for="gebruikersnaam">Gebruikersnaam:</label><br>
+        <input type="text" name="gebruikersnaam" required><br/>
+        <label for="wachtwoord">Wachtwoord:</label><br/>
+        <input type="password" name="wachtwoord" required><br/>
+        <input type="submit" value="Login">
+    </form>
 {% endblock %}

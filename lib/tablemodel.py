@@ -106,7 +106,7 @@ class DatabaseModel:
 
     def get_vraag_html(self, table_headers, table_content, cursor):
         cursor = sqlite3.connect(self.database_file).cursor()
-        cursor.execute("SELECT id,vraag FROM  vragen")
+        cursor.execute("SELECT id, leerdoel, vraag, auteur  FROM  vragen")
         # An alternative for this 2 var approach is to set a sqlite row_factory on the connection
         table_headers = [column_name[0] for column_name in cursor.description]
         table_content = cursor.fetchall()
@@ -116,10 +116,21 @@ class DatabaseModel:
 
     def get_auteur_html(self, table_headers, table_content, cursor):
         cursor = sqlite3.connect(self.database_file).cursor()
-        cursor.execute("SELECT id,auteur FROM  vragen")
+        cursor.execute("SELECT * FROM auteurs")
         # An alternative for this 2 var approach is to set a sqlite row_factory on the connection
         table_headers = [column_name[0] for column_name in cursor.description]
         table_content = cursor.fetchall()
 
         # Note that this method returns 2 variables!
+        return table_content, table_headers
+
+
+    # Modified from above
+    def get_admin_table_content(self, table_name):
+        cursor = sqlite3.connect(self.database_file).cursor()
+        cursor.execute(f"SELECT user_id, gebruikersnaam FROM {table_name}")
+        
+        table_headers = [column_name[0] for column_name in cursor.description]
+        table_content = cursor.fetchall()
+
         return table_content, table_headers
