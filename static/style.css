@@ -34,3 +34,9 @@ h1 {
     color: rgb(30, 238, 169);
     border-left: 6px solid #f4e136;
 }
+
+.teapot {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -19,6 +19,7 @@
           {% for field in row %}
           <td>{{ field }}</td>
           {% endfor %}
+          <td><a class="btn btn-primary" href="/edit_auteur/{{ row[0] }}"> Bewerk </a></td>
         </tr>
         {% endfor %}
       </tbody>

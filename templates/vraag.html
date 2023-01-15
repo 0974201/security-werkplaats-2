@@ -6,11 +6,11 @@
 
   <form method="POST" action="/edit_vraag/{{id}}">
       <label for="leerdoel" class="form-label">Leerdoel:</label><br/>
-      <input type="text" name="leerdoel" class="form-control" value="{{leerdoel}}" readonly><br/>
+      <input type="text" name="leerdoel" class="form-control" value="{{leerdoel}}"><br/>
       <label for="vraag" class="form-label">Vraag:</label><br/>
       <input type="text" name="vraag" class="form-control" value="{{vraag}}"><br/>
       <label for="auteur" class="form-label">Auteur:</label><br/>
-      <input type="text" name="auteur" class="form-control" value="{{auteur}}" readonly><br/>
+      <input type="text" name="auteur" class="form-control" value="{{auteur}}"><br/>
       <button type="submit" class="btn btn-primary">Bewerk vraag</button>
   </form>
 {% endblock %}

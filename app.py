@@ -357,8 +357,8 @@ def delete_account(id):
     return redirect(url_for('admin'))        
 
 @app.route("/teapot") #test
-def test():
-    return render_template("test.html"), 418
+def teapot():
+    return render_template("teapot.html"), 418
 
 
 @app.route("/id/<table_name>")
@@ -419,7 +419,67 @@ def edit_vraag(id):
         editbl.edit_vraag(leerdoel, vraag, auteur, id)
 
         flash(f"vraag {id} bewerkt.", "info")
-        return redirect(url_for('home'))
+        return redirect(url_for('vraag_html'))
+
+@app.route("/edit_auteur/<id>")
+def edit_medewerker(id):
+    get_medewerker = editbl.auteur(id)
+    print(get_medewerker)
+
+    id = get_medewerker[0]
+    voornaam = get_medewerker[1]
+    achternaam = get_medewerker[2]
+    geboortejaar = get_medewerker[3]
+    medewerker = get_medewerker[4]
+    met_pensioen = get_medewerker[5]
+
+    return render_template("edit_auteur.html", id = id, voornaam = voornaam, achternaam = achternaam, geboortejaar = geboortejaar, medewerker = medewerker, met_pensioen = met_pensioen)
+
+@app.route("/edit_auteur/<id>", methods = ['GET', 'POST'] )
+def edit_medewerker_post(id):
+    if request.method == 'POST':
+        
+        voornaam = request.form.get('voornaam')
+        achternaam = request.form.get('achternaam')
+        geboortejaar = request.form.get('geboortejaar')
+        medewerker = request.form.get('medewerker')
+        met_pensioen = request.form.get('met_pensioen')
+
+        if medewerker == "on":
+            medewerker = 1
+        else:
+            medewerker = 0
+
+        if met_pensioen == "on":
+            met_pensioen = 1
+        else:
+            met_pensioen = 0
+
+        editbl.edit_medewerker(voornaam, achternaam, geboortejaar, medewerker, met_pensioen, id)
+
+        flash(f"vraag {id} bewerkt.", "info")
+        return redirect(url_for('auteur'))
+
+@app.route("/edit_leerdoel/<id>", methods = ['GET', 'POST'] )
+def edit_leerdoel(id):
+    get_leerdoel = editbl.leerdoel(id)
+    print(get_leerdoel)
+
+    id = get_leerdoel[0]
+    leerdoel = get_leerdoel[1]
+
+    return render_template("edit_leerdoel.html", id = id, leerdoel = leerdoel)
+
+@app.route("/edit_leerdoel/<id>", methods = ['GET', 'POST'] )
+def edit_leerdoel_post(id):
+    if request.method == 'POST':
+        
+        leerdoel = request.form.get('leerdoel')
+
+        editbl.edit_leerdoel(leerdoel, id)
+
+        flash(f"leerdoel {id} bewerkt.", "info")
+        return redirect(url_for('leerdoel'))
 
 @app.route("/auteur")
 def auteur_html(table_name="auteurs"):

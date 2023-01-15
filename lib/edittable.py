@@ -36,6 +36,8 @@ class EditTable:
             cursor.execute("SELECT * FROM leerdoelen WHERE id = ?", [id])
             leerdoel = cursor.fetchone()
 
+            print(leerdoel)
+
             connection.close()
 
         except OperationalError as e:
@@ -51,6 +53,8 @@ class EditTable:
             #SQL statement to get auteur from db
             cursor.execute("SELECT * FROM auteurs WHERE id = ?", [id])
             auteur = cursor.fetchone()
+
+            print(auteur)
 
             connection.close()
 
@@ -69,6 +73,44 @@ class EditTable:
             edit_vraag = (leerdoel, vraag, auteur, id)
 
             cursor.execute(update_vraag_qry, edit_vraag)
+            connection.commit()
+
+            connection.close()
+
+        except OperationalError as e:
+            print(f"Error opening database file {self.database_file}")
+            raise e
+    
+    def edit_medewerker(self, voornaam, achternaam, geboortejaar, medewerker, met_pensioen, id):
+        try:
+            connection = sqlite3.connect(self.database_file)
+            cursor = connection.cursor()
+        
+            #SQL statement to update an existing user
+            update_medewerker_qry = "UPDATE auteurs SET voornaam = ?, achternaam = ?, geboortejaar = ?, medewerker = ?, met_pensioen = ? WHERE id = ?"
+            edit_medewerker = (voornaam, achternaam, geboortejaar, medewerker, met_pensioen, id)
+
+            print(edit_medewerker)
+            
+            cursor.execute(update_medewerker_qry, edit_medewerker)
+            connection.commit()
+
+            connection.close()
+
+        except OperationalError as e:
+            print(f"Error opening database file {self.database_file}")
+            raise e
+        
+    def edit_leerdoel(self, leerdoel, id):
+        try:
+            connection = sqlite3.connect(self.database_file)
+            cursor = connection.cursor()
+        
+            #SQL statement to update an existing user
+            update_leerdoel_qry = "UPDATE leerdoelen SET leerdoel = ?, WHERE id = ?"
+            edit_leerdoel = (leerdoel, id)
+
+            cursor.execute("UPDATE leerdoelen SET leerdoel = ?, WHERE id = ?", [edit_leerdoel])
             connection.commit()
 
             connection.close()
