@@ -5,6 +5,7 @@
   <h1>Bewerk vraag {{id}}</h1>
 
   <form method="POST" action="/edit_vraag/{{id}}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       <label for="leerdoel" class="form-label">Leerdoel:</label><br/>
       <input type="text" name="leerdoel" class="form-control" value="{{leerdoel}}"><br/>
       <label for="vraag" class="form-label">Vraag:</label><br/>

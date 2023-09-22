@@ -9,6 +9,7 @@
     <h1>Gegevens van {{gebruikersnaam}}</h1>
 
     <form method="POST" action="/editaccount/{{id}}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <div class="mb-3">
           <label for="gebruikersnaam" class="form-label">Gebruikersnaam:</label>
           <input type="text" name="gebruikersnaam" class="form-control" id="username" value="{{gebruikersnaam}}" aria-describedby="username">

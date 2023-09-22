@@ -9,6 +9,7 @@
     <h1>Login Here</h1>
 
     <form method="POST" action="/login">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <label for="gebruikersnaam">Gebruikersnaam:</label><br>
         <input type="text" name="gebruikersnaam" required><br/>
         <label for="wachtwoord">Wachtwoord:</label><br/>

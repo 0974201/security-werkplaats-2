@@ -13,6 +13,7 @@ from flask import (
     flash,
     send_from_directory,
 )
+from flask_wtf.csrf import CSRFProtect
 #from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 
 from lib.tablemodel import DatabaseModel
@@ -26,8 +27,10 @@ LISTEN_ALL = "0.0.0.0"
 FLASK_IP = LISTEN_ALL
 FLASK_PORT = 81
 FLASK_DEBUG = True
+CSRF = CSRFProtect()
 
 app = Flask(__name__)
+CSRF.init_app(app)
 #f_bcrypt = Bcrypt(app)
 
 app.config["SECRET_KEY"] = "dit-is-een-secret-key"
