@@ -359,6 +359,8 @@ def delete_account(id):
     flash("Gebruiker verwijderd", "warning")
     return redirect(url_for('admin'))        
 
+@app.route("/robots.txt")
+@app.route("/sitemap.xml")
 @app.route("/teapot") #test
 def teapot():
     return render_template("teapot.html"), 418
