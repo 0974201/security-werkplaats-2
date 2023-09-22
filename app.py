@@ -34,6 +34,7 @@ CSRF.init_app(app)
 #f_bcrypt = Bcrypt(app)
 
 app.config["SECRET_KEY"] = "dit-is-een-secret-key"
+app.config.update(SESSION_COOKIE_SAMESITE = 'Lax')
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
 DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db")
 
