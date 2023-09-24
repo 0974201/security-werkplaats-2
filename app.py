@@ -14,6 +14,7 @@ from flask import (
     send_from_directory,
 )
 from flask_wtf.csrf import CSRFProtect
+from flask_talisman import Talisman
 #from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 
 from lib.tablemodel import DatabaseModel
@@ -31,10 +32,21 @@ CSRF = CSRFProtect()
 
 app = Flask(__name__)
 CSRF.init_app(app)
+
 #f_bcrypt = Bcrypt(app)
 
 app.config["SECRET_KEY"] = "dit-is-een-secret-key"
 app.config.update(SESSION_COOKIE_SAMESITE = 'Lax')
+
+csp = {
+    'default-src': '\'self\'', 
+    'img-src': ['\'self\'', 'live.staticflickr.com'], 
+    'script-src': 'cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js', 
+    'style-src': '*'
+    }
+
+talisman = Talisman(app, content_security_policy = csp)
+
 # This command creates the "<application directory>/databases/testcorrect_vragen.db" path
 DATABASE_FILE = os.path.join(app.root_path, "databases", "testcorrect_vragen.db")
 
